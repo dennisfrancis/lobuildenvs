@@ -17,7 +17,7 @@ cd ${WORKSPACE}
 ##[1]## Generate core.git build tarball
 
 CORE_TARBALL="${COREROOT}-build.tar.gz"
-BUILDSUBDIRS="${COREROOT}/instdir ${COREROOT}/workdir ${COREROOT}/external/tarballs"
+BUILDSUBDIRS="${COREROOT}/instdir ${COREROOT}/workdir ${COREROOT}/external/tarballs ${COREROOT}/compilerplugins"
 #BUILDSUBDIRS="${COREROOT}/instdir ${COREROOT}/workdir"
 
 echo "Generating build tarball with ${BUILDSUBDIRS}"
