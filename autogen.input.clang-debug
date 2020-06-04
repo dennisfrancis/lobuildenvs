@@ -1,0 +1,14 @@
+CC=clang
+CXX=clang++
+--with-parallelism=1
+--enable-debug
+--enable-optimized=debug
+--enable-split-debug
+--enable-gdb-index
+--enable-ld=gold
+--enable-compiler-plugins
+--without-junit
+--without-doxygen
+--without-help
+--without-myspell-dicts
+--disable-ccache
