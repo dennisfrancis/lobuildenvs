@@ -1,0 +1,11 @@
+CC=clang
+CXX=clang++
+--with-parallelism=1
+--enable-symbols
+--enable-ld=gold
+--enable-compiler-plugins
+--without-junit
+--without-doxygen
+--without-help
+--without-myspell-dicts
+--disable-ccache
