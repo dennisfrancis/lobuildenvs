@@ -2,8 +2,8 @@ CC=clang
 CXX=clang++
 --with-parallelism=1
 --enable-symbols
+--enable-assert-always-abort
 --enable-ld=gold
---enable-compiler-plugins
 --without-junit
 --without-doxygen
 --without-help
