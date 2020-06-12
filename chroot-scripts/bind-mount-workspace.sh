@@ -13,4 +13,5 @@ mkdir -p ${CHRWORKSPACE}
 
 mountpoint -q ${CHRWORKSPACE} && { echo "The workspace is already mounted at ${CHRWORKSPACE}"; exit -1; }
 
-mount --bind ${WORKSPACE} ${CHRWORKSPACE} 
+mount --bind ${WORKSPACE} ${CHRWORKSPACE}
+

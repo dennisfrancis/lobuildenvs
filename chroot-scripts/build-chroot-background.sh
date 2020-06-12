@@ -22,3 +22,4 @@ echo ""
 
 echo "tail of build-chroot.sh log:"
 tail ${LOGFILE}
+

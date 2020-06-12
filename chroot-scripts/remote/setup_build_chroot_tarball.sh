@@ -32,3 +32,4 @@ ssh root@chrootbuildmc "cd \"${SETUPDIR}\" && bash create-chroot-tarball.sh"
 
 
 echo "Chroot tarball is ready in the remote machine."
+

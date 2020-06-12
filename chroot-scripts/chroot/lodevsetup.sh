@@ -19,3 +19,4 @@ apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/*
 
 sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
+

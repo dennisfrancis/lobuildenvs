@@ -50,3 +50,4 @@ debootstrap --include=sudo ${DEBVERSION} ${CHRDIR} http://deb.debian.org/debian
 schroot -c "${CHRNAME}" bash ${LODEVSETUP_SCRIPT}
 
 rm -f ${LOCKFILE}
+
