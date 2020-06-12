@@ -39,15 +39,17 @@ chmod -R 755 ${WORKSPACE}
 sudo -u ${UNAME} bash -c "cd ${WORKSPACE}; rm -rf ${LOBUILDENVS_REPO_NAME}; git clone \"${LOBUILDENVS_REPO_URL}\""
 
 
-# build a basic chroot if not present already.
-[ -d ${CHRDIR}/bin ] && { echo "There is already a chroot setup at ${CHRDIR} !"; rm -f ${LOCKFILE}; exit 0; }
-
+# build a basic chroot
+rm -rf ${CHRDIR}
 mkdir -p ${CHRDIR}
 
 debootstrap --include=sudo ${DEBVERSION} ${CHRDIR} http://deb.debian.org/debian
 
 # setup LibreOffice dev environment in the chroot
-schroot -c "${CHRNAME}" bash ${LODEVSETUP_SCRIPT}
+echo ""
+echo ""
+echo "Setting up LO dev env..."
+schroot -c "${CHRNAME}" -d /  bash ${LODEVSETUP_SCRIPT}
 
 rm -f ${LOCKFILE}
 

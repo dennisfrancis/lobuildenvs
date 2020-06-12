@@ -7,6 +7,10 @@ if [ ! -f ${LOCKFILE} ]
 then
 	echo "starting build-chroot.sh in the background"
 	bash ./build-chroot.sh > ${LOGFILE} 2>&1 &
+	while [ ! -f ${LOGFILE} ]
+	do
+		sleep 1s
+	done
 fi
 
 [ -f ${LOCKFILE} ] && echo "build-chroot.sh is running..."
