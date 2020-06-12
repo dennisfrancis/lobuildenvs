@@ -13,7 +13,7 @@ fi
 while [ -f ${LOCKFILE} ]
 do
 	echo -n '...'
-	sleep 10s
+	sleep 5s
 done
 
 echo ""

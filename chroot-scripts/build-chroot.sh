@@ -36,7 +36,7 @@ chmod -R 755 ${WORKSPACE}
 
 
 # Clone lobuildenvs repo to home dir
-sudo -u ${UNAME} bash -c "cd ${WORKSPACE}; git clone \"${LOBUILDENVS_REPO_URL}\""
+sudo -u ${UNAME} bash -c "cd ${WORKSPACE}; rm -rf ${LOBUILDENVS_REPO_NAME}; git clone \"${LOBUILDENVS_REPO_URL}\""
 
 
 # build a basic chroot if not present already.
