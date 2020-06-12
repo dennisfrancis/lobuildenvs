@@ -20,7 +20,7 @@ ssh root@buildmc "apt-get install rsync git && cd /root && git clone ${LOBUILDEN
 SETUPDIR="/root/${LOBUILDENVS_REPO_NAME}/chroot-scripts"
 
 echo "building chroot and LO dev-env in buildmc"
-ssh root@buildmc "cd \"${SETUPDIR}\" && bash host-setup-background.sh"
+ssh root@buildmc "cd \"${SETUPDIR}\" && bash build-chroot-background.sh"
 
 [ $? -ne 0 ] && { echo "chroot/LOdev-env build in buildmc failed! Not proceeding."; exit -1; }
 
