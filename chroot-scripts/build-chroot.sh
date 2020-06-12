@@ -6,7 +6,7 @@ source ./envvars.sh
 
 [ "$(whoami)" != "root" ] && { echo "Need to be root to run this!"; exit -1; }
 
-[ -f ${LOCKFILE} ] && { echo "tried to run build-chroot.sh when ${LOCKFILE} is present"; exit -1 }
+[ -f ${LOCKFILE} ] && { echo "tried to run build-chroot.sh when ${LOCKFILE} is present"; exit -1; }
 
 touch ${LOCKFILE}
 
