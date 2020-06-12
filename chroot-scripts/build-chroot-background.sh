@@ -5,6 +5,7 @@ LOGFILE=buildchroot.log
 
 if [ ! -f ${LOCKFILE} ]
 then
+	rm -f ${LOGFILE}
 	echo "starting build-chroot.sh in the background"
 	bash ./build-chroot.sh > ${LOGFILE} 2>&1 &
 	while [ ! -f ${LOGFILE} ]
@@ -25,5 +26,8 @@ echo "Done."
 echo ""
 
 echo "tail of build-chroot.sh log:"
+echo "----------------------------"
 tail ${LOGFILE}
+echo "----------------------------"
+echo ""
 
