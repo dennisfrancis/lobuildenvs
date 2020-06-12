@@ -49,7 +49,7 @@ debootstrap --include=sudo ${DEBVERSION} ${CHRDIR} http://deb.debian.org/debian
 echo ""
 echo ""
 echo "Setting up LO dev env..."
-schroot -c "${CHRNAME}" -d /  bash ${LODEVSETUP_SCRIPT}
+schroot -c "${CHRNAME}" -d ${LODEVSETUP_DIR} -- bash ${LODEVSETUP_SCRIPT}
 
 rm -f ${LOCKFILE}
 

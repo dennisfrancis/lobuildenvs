@@ -8,6 +8,8 @@ mountpoint -q ${CHRDIR}/proc && { echo "chroot session in ${CHRDIR} is active, e
 
 du -sh --exclude ${CHRWORKSPACE} ${CHRDIR}
 
+rm -f ${CHRTARBALL}
+
 echo ""
 echo "Creating tarball ${CHRTARBALL} from ${CHRDIR}"
 tar --exclude ${CHRWORKSPACE} -czf ${CHRTARBALL} ${CHRDIR}
