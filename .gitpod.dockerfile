@@ -8,7 +8,7 @@ RUN echo deb http://deb.debian.org/debian buster main contrib non-free > /etc/ap
     && echo deb-src http://security.debian.org/debian-security/ buster/updates main contrib non-free >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get full-upgrade \
-    && apt-get install -y binutils locales sudo vim procps \
+    && apt-get install -y binutils locales sudo vim procps bash-completion \
     && locale-gen en_US.UTF-8 \
     && apt-get install -y git ccache junit4 gstreamer1.0-libav libkrb5-dev nasm graphviz libpython3-dev valgrind libpoco-dev \
     && apt-get install -y libpng-dev libcap-dev python3-polib libpam0g-dev libgtk2.0-dev \
