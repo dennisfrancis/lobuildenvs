@@ -1,10 +1,7 @@
 #!/bin/bash
 
-REPODIR=${REPODIR-core}
+source ../envvars.sh
 
-#WORKSPACE="/workspace"
-WORKSPACE="/home/dennis/devel"
-COREROOT="${WORKSPACE}/${REPODIR}"
 MAKEROOTPID=$(ps aux | grep build-nocheck | grep -v grep | awk '{print $2}')
 
 echo ""
@@ -18,7 +15,7 @@ fi
 
 echo ""
 echo "core.git build space usage"
-du -sh ${COREROOT}/workdir ${COREROOT}/instdir
+du -sh ${COREDIR}/workdir ${COREDIR}/instdir
 
 echo ""
 echo "free -h"

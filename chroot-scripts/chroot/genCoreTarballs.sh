@@ -1,24 +1,18 @@
 #!/bin/bash
 
-[ "$#" -ne 2 ] && echo "USAGE $0 <REPODIR> <BASE-COMMIT-HASH>" && exit
+[ "$#" -ne 1 ] && echo "USAGE $0 <BASE-COMMIT-HASH>" && exit
 
-COREROOT=$1
-BASEHASH=$2
+source ../envvars.sh
 
-#WORKSPACE="/workspace"
-WORKSPACE="/home/dennis/devel"
+BASEHASH=$1
 
-[ -d ${WORKSPACE}/${COREROOT} ] || { echo "Cannot access ${WORKSPACE}/${COREROOT} !!"; exit -1; }
+[ -d ${COREDIR} ] || { echo "Cannot access ${COREDIR} !!"; exit -1; }
 
 ORIGDIR="$(pwd)"
 
 cd ${WORKSPACE}
 
 ##[1]## Generate core.git build tarball
-
-CORE_TARBALL="${COREROOT}-build.tar.gz"
-BUILDSUBDIRS="${COREROOT}/instdir ${COREROOT}/workdir ${COREROOT}/external/tarballs"
-#BUILDSUBDIRS="${COREROOT}/instdir ${COREROOT}/workdir"
 
 echo "Generating build tarball with ${BUILDSUBDIRS}"
 
@@ -34,17 +28,16 @@ echo ""
 
 ##[2]##
 
-CHANGEDFILES_TARBALL="${COREROOT}-chgd-files.tar.gz"
 echo "Generating changed src files tarball"
 
-cd $COREROOT
+cd $COREDIR
 FLIST=$(git diff --name-only ${BASEHASH})
 cd -
 
 CHANGED_FILES=""
 for fname in ${FLIST}
 do
-	CHANGED_FILES="${CHANGED_FILES} ${COREROOT}/${fname}"
+	CHANGED_FILES="${CHANGED_FILES} ${COREDIR}/${fname}"
 done
 
 tar -czf ${CHANGEDFILES_TARBALL} ${CHANGED_FILES}
