@@ -25,3 +25,4 @@ echo ""
 echo "clang processes"
 pgrep -l clang
 
+true
