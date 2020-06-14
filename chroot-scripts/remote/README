@@ -91,22 +91,26 @@
 	"make list"
 
 
-10. "make build2store"   ; copy all build/log tarballs/files to storemc with checksum protection.
+
+10. "make build-tarballs" ; creates build tarballs, gzips the logs, checksums all generated files.
+
+
+11. "make build2store"   ; copy all build/log tarballs/files to storemc with checksum protection.
 
 
 ---- Now the buildmc can be destroyed ------------------------
 
 
-11. "make download"   ; Downloads all build/log tarballs/files to local machine from storemc
+12. "make download"   ; Downloads all build/log tarballs/files to local machine from storemc
 
 
 ---- Now the storemc can be destroyed ------------------------
 
 
-12. "make extract-local"  ; Extract all build tarballs in local machine
+13. "make extract-local"  ; Extract all build tarballs in local machine
 
 
-13. Check if 'make build-nocheck' (core) / 'make' (online) works without
+14. Check if 'make build-nocheck' (core) / 'make' (online) works without
     actual building.
 
 
