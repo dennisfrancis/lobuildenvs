@@ -1,3 +1,6 @@
+# ssh key names
+SSH_KEYNAME=id_rsa_build
+
 # user settings
 UNAME=dennis
 UHOME=/home/$UNAME

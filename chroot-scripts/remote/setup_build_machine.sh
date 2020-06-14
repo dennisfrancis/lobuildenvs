@@ -13,13 +13,13 @@ ssh root@buildmc "apt-get install -y rsync git && cd /root && rm -rf ${LOBUILDEN
 
 [ $? -ne 0 ] && { echo "setting up buildmc failed! Not proceeding."; exit -1; }
 
-ssh root@buildmc "test -d /root/.ssh && test -f /root/.ssh/id_rsa && test -f /root/.ssh/id_rsa.pub"
+ssh root@buildmc "test -d /root/.ssh && test -f /root/.ssh/${SSH_KEYNAME} && test -f /root/.ssh/${SSH_KEYNAME}.pub"
 NEED_SSHKEYS=$?
 if [ ${NEED_SSHKEYS} -ne 0 ]
 then
-	ssh root@buildmc "mkdir -p /root/.ssh && chmod 700"
-	scp ~/.ssh/id_rsa_build.pub root@buildmc:/root/.ssh/id_rsa.pub && ssh root@buildmc "chmod 644 /root/.ssh/id_rsa.pub"
-	scp ~/.ssh/id_rsa_build     root@buildmc:/root/.ssh/id_rsa     && ssh root@buildmc "chmod 600 /root/.ssh/id_rsa"
+	ssh root@buildmc "mkdir -p /root/.ssh && chmod 700 && rm -f /root/.ssh/${SSH_KEYNAME}*" && \
+		scp ~/.ssh/${SSH_KEYNAME} root@buildmc:/root/.ssh/ && \
+		ssh root@buildmc "chmod 644 /root/.ssh/${SSH_KEYNAME}.pub && chmod 600 /root/.ssh/${SSH_KEYNAME}"
 fi
 
 # Host alias for storemc in buildmc
