@@ -1,0 +1,112 @@
+1. Set correct values to the variables in envvars.sh
+	----
+
+	REPODIR
+	ONLINEREPODIR
+	----
+
+	CORE_REMOTE
+	CORE_BRANCH
+	ONLINE_REMOTE
+	ONLINE_BRANCH
+	----
+
+	ONLINE_CONFIG_CMD (if you changed any flags from usual)
+	----
+
+	NPARALLEL (IMPORTANT !!! set this according to the #phy cores in
+		   buildmc)
+	----
+
+
+2. Commit and push to CORE_REMOTE/CORE_BRANCH for core.git and
+   ONLINE_REMOTE/ONLINE_BRANCH
+
+
+3. Run ./autogen.sh in both core and online local repos
+
+
+4. Start storemc, update ip in ~/.ssh/config
+
+
+5. "make upload"
+
+--------- start buildmc ------------------------------
+
+6. Start buildmc, update ip in ~/.ssh/config
+
+
+7. "git push" to update lobuildenvs.git in github
+
+
+8. "make setup-buildmc"
+
+
+9. Build and run checks
+
+	"make clean"   ; resets repos, runs make clean in buildmc (there are
+			 clean-core, clean-online if you need to do this separately)
+
+	---- Core
+
+	"make core"    ; runs ./autogen.sh and make build-nocheck in a
+			 background process in buildmc
+
+	"make core.incbuild"  ; to run 'make build-nocheck' without
+				running ./autogen.sh
+
+	"make core.log"  ; to see a tail of the core build's log file.
+
+	"make stop"    ; kills all make and clang processes
+
+	"make core.check"  ; runs check targets specified in CORE_MAKECHECK_TARGETS
+
+	"make core.check.log"  ; to see a tail of the core check log file.
+
+	---- Online
+
+	"make online"
+	"make online.incbuild"
+	"make stop"
+	"make online.check"
+	"make online.log"
+	"make online.check.log"
+
+
+	---- Do this if you have introduced new patches after "make setup-buildmc"
+
+	Commit local changes and run git push in local machine to the required remote/branches
+
+	"make core.git.pull"   ; runs git pull -r -core-remote-/-core-branch- in buildmc
+	"make online.git.pull" ; same for online
+
+
+	---- Build status
+
+	"make status"
+
+
+	---- List files in WORKSPACE
+
+	"make list"
+
+
+10. "make build2store"   ; copy all build/log tarballs/files to storemc with checksum protection.
+
+
+---- Now the buildmc can be destroyed ------------------------
+
+
+11. "make download"   ; Downloads all build/log tarballs/files to local machine from storemc
+
+
+---- Now the storemc can be destroyed ------------------------
+
+
+12. "make extract-local"  ; Extract all build tarballs in local machine
+
+
+13. Check if 'make build-nocheck' (core) / 'make' (online) works without
+    actual building.
+
+

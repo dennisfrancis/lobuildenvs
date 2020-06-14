@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./localenv.sh
+source ../envvars.sh
 
 [ ! -f ${LOCAL_CHRTARBALL} ] && { echo "Can't access ${LOCAL_CHRTARBALL} !"; exit -1; }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./localenv.sh
+source ../envvars.sh
 
 BUILDLOG=${WORKSPACE}/build.log
 REPODIR=${REPODIR-core}

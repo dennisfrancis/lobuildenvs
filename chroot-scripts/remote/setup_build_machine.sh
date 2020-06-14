@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./localenv.sh
+source ../envvars.sh
 
 echo "reporefresh buildmc"
 ssh root@buildmc "apt-get update"
@@ -27,7 +27,7 @@ ssh root@buildmc "cat /root/.ssh/config | grep storemc" > /dev/null || \
 	grep -B 1 -A 3 'Host storemc' ~/.ssh/config  | ssh root@buildmc "tee -a /root/.ssh/config"
 
 # Copy chroot tarball, core.git/online.git tarballs
-ssh root@buildmc "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@storemc:/root/*.* /root/" || \
+ssh root@buildmc "scp ${SSH_NOHOSTCHECK_FLAGS} root@storemc:/root/*.* /root/" || \
 	{ echo "copy from storemc failed!"; exit -1; }
 
 ssh root@buildmc "cd /root && sha256sum -c ${CSUMSFILE}" || { echo "Checksums failed for tarballs copied from storemc !"; exit -1; }
