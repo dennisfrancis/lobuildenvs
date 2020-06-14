@@ -43,7 +43,7 @@ ONLINE_BRANCH="feature/calc-coordinates"
 
 CSUMSFILE=checksums.txt
 
-CORE_TARBALL="${COREDIR}-build.tar.gz"
-BUILDSUBDIRS="${COREDIR}/instdir ${COREDIR}/workdir ${COREDIR}/external/tarballs"
-CHANGEDFILES_TARBALL="${COREDIR}-chgd-files.tar.gz"
+CORE_BUILD_TARBALL="${COREDIR}-build.tar.gz"
+CORE_BUILDSUBDIRS="${COREDIR}/instdir ${COREDIR}/workdir ${COREDIR}/external/tarballs"
+CORE_CHANGEDFILES_TARBALL="${COREDIR}-chgd-files.tar.gz"
 

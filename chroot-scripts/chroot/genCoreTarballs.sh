@@ -14,13 +14,13 @@ cd ${WORKSPACE}
 
 ##[1]## Generate core.git build tarball
 
-echo "Generating build tarball with ${BUILDSUBDIRS}"
+echo "Generating build tarball with ${CORE_BUILDSUBDIRS}"
 
-tar -czf ${CORE_TARBALL} ${BUILDSUBDIRS}
+tar -czf ${CORE_BUILD_TARBALL} ${CORE_BUILDSUBDIRS}
 
 echo "Done."
 
-ls -lht ${CORE_TARBALL}
+ls -lht ${CORE_BUILD_TARBALL}
 
 echo ""
 
@@ -40,10 +40,10 @@ do
 	CHANGED_FILES="${CHANGED_FILES} ${COREDIR}/${fname}"
 done
 
-tar -czf ${CHANGEDFILES_TARBALL} ${CHANGED_FILES}
+tar -czf ${CORE_CHANGEDFILES_TARBALL} ${CHANGED_FILES}
 
 echo "Done."
-ls -lht ${CHANGEDFILES_TARBALL}
+ls -lht ${CORE_CHANGEDFILES_TARBALL}
 
 echo ""
 
