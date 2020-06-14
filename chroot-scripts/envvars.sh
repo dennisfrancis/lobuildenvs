@@ -68,7 +68,7 @@ ONLINE_CHECK_LOG=${WORKSPACE}/online-check.log
 
 
 # ./configure command for online
-ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress --no-create --no-recursion"
+ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress"
 
 
 # make check targets
@@ -77,7 +77,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=1
+NPARALLEL=4
 
 # storemc vars
 STOREMC_BUILDTARBALLS_DIR=/root/build

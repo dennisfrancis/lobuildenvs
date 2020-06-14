@@ -85,12 +85,12 @@ core.incbuild: buildsession autogen.input nobuilds-running
 online: buildsession nobuilds-running $(NPM)
 	@echo "Starting build in $(ONLINEDIR)"
 	ssh dennis@buildmc \
-		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c '(./autogen.sh && $(ONLINE_CONFIG_CMD) && make -j$(NPARALLEL)) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
+		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && (./autogen.sh && $(ONLINE_CONFIG_CMD) && make -j$(NPARALLEL)) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
 
 online.incbuild: buildsession nobuilds-running
 	@echo "Starting incremental build in $(ONLINEDIR)"
 	ssh dennis@buildmc \
-		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'make -j$(NPARALLEL) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
+		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && make -j$(NPARALLEL) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
 
 $(NPM):
 	@echo "Setting up nvm"
@@ -103,7 +103,7 @@ core.check: buildsession nobuilds-running
 
 online.check: buildsession nobuilds-running
 	ssh dennis@buildmc \
-		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'make $(ONLINE_MAKECHECK_TARGETS) >> $(ONLINE_CHECK_LOG) 2>&1 &'"
+		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && make $(ONLINE_MAKECHECK_TARGETS) >> $(ONLINE_CHECK_LOG) 2>&1 &'"
 	@echo "Started online checks"
 
 core.git.pull:
@@ -128,8 +128,8 @@ status:
 	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./printBuildInfo.sh"
 
 build-tarballs: nobuilds-running
-	@[ -z "$(CORE_BASE_COMMIT)" ] && echo "CORE_BASE_COMMIT variable not set!" && false
-	@[ -z "$(ONLINE_BASE_COMMIT)" ] && echo "ONLINE_BASE_COMMIT variable not set!" && false
+	@[ ! -z "$(CORE_BASE_COMMIT)" ] && true || { echo "CORE_BASE_COMMIT variable not set!" && false; }
+	@[ ! -z "$(ONLINE_BASE_COMMIT)" ] && true || { echo "ONLINE_BASE_COMMIT variable not set!" && false; }
 	@echo "Generating core build tarballs..."
 	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./genCoreTarballs.sh $(CORE_BASE_COMMIT)"
 	@echo "Generating online build tarballs..."
