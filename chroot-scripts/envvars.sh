@@ -9,7 +9,7 @@ UNUSEDPASS=dennis
 
 # workspace dir in the host
 #WORKSPACE="/workspace"
-WORKSPACE="/home/dennis/devel"
+WORKSPACE=/home/dennis/devel
 
 # chroot system
 DEBVERSION=buster
@@ -38,11 +38,11 @@ ONLINEREPODIR=online
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 
-CORE_REMOTE="github"
-CORE_BRANCH="feature/calc-coordinates"
+CORE_REMOTE=github
+CORE_BRANCH=feature/calc-coordinates
 
-ONLINE_REMOTE="github"
-ONLINE_BRANCH="feature/calc-coordinates"
+ONLINE_REMOTE=github
+ONLINE_BRANCH=feature/calc-coordinates
 
 CSUMSFILE=checksums.txt
 
@@ -51,13 +51,13 @@ BUILD_SESSION_NAME=build
 BUILD_SESSION=session:build
 
 # Build tarballs
-CORE_BUILD_TARBALL="${COREDIR}-build.tar.gz"
-CORE_BUILDSUBDIRS="${COREDIR}/instdir ${COREDIR}/workdir ${COREDIR}/external/tarballs"
-CORE_CHANGEDFILES_TARBALL="${COREDIR}-chgd-files.tar.gz"
+CORE_BUILD_TARBALL=${COREDIR}-build.tar.gz
+CORE_BUILDSUBDIRS="${REPODIR}/instdir ${REPODIR}/workdir ${REPODIR}/external/tarballs"
+CORE_CHANGEDFILES_TARBALL=${COREDIR}-chgd-files.tar.gz
 
-ONLINE_BUILD_TARBALL="${ONLINEDIR}-build.tar.gz"
-ONLINE_BUILDSUBDIRS=${ONLINEDIR}
-ONLINE_CHANGEDFILES_TARBALL="${ONLINEDIR}-chgd-files.tar.gz"
+ONLINE_BUILD_TARBALL=${ONLINEDIR}-build.tar.gz
+ONLINE_BUILDSUBDIRS=${ONLINEREPODIR}
+ONLINE_CHANGEDFILES_TARBALL=${ONLINEDIR}-chgd-files.tar.gz
 
 
 # build log files
@@ -77,10 +77,10 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=4
+NPARALLEL=1
 
 # storemc vars
-STOREMC_BUILDTARBALLS_DIR="/root/build"
+STOREMC_BUILDTARBALLS_DIR=/root/build
 
 # SSH options
 SSH_NOHOSTCHECK_FLAGS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"

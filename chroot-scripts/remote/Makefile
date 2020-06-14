@@ -5,8 +5,8 @@ ENVFILE = ../envvars.sh
 include $(ENVFILE)
 
 MYRANDNUMBER = $(shell od -vAn -N2 -tu2 < /dev/urandom | tr -d ' ')
-BUILD_IS_RUNNING = $(shell ssh dennis@buildmc "pgrep make" > /dev/null && echo 1 || echo 0)
-LOCAL_BUILD_IS_RUNNING = $(shell pgrep clang > /dev/null && echo 1 || echo 0)
+BUILD_IS_RUNNING = $(shell ssh dennis@buildmc "pgrep make" > /dev/null && echo yes || echo no)
+LOCAL_BUILD_IS_RUNNING = $(shell pgrep vim > /dev/null && echo yes || echo no)
 
 NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 
@@ -16,12 +16,12 @@ NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 	core.git.pull online.git.pull core.log online.log status \
 	core.check.log online.check.log \
 	build2store buildsession build-tarballs download extract-local \
-	nobuilds-running setup-buildmc upload list
+	nobuilds-running setup-buildmc upload list warn-builds-running nobuilds-running-local
 
 noop:
 	@echo "No-op target"
 
-mydebug:
+mydebug: warn-builds-running
 	@echo "MYRANDNUMBER = $(MYRANDNUMBER)"
 	@echo "workspace = $(WORKSPACE)"
 	@echo "LODEVSETUP_DIR = $(LODEVSETUP_DIR)"
@@ -32,20 +32,26 @@ mydebug:
 		{ echo "second namespace"; echo "still in second"; } && \
 		echo "final" && echo host: dennis@buildmc
 	-false
+	@echo "COREDIR = $(COREDIR)"
 	@echo "finished sucessfully"
 
 buildsession:
-	ssh dennis@buildmc "schroot -l --all-sessions" | grep $(BUILD_SESSION_NAME) > /dev/null || \
+	@ssh dennis@buildmc "schroot -l --all-sessions" | grep $(BUILD_SESSION_NAME) > /dev/null || \
 		{ echo "Starting build session"; ssh dennis@buildmc "schroot -c $(CHRNAME) -b -n $(BUILD_SESSION_NAME)"; }
 
+nobuilds-running-local:
+	@[ "$(LOCAL_BUILD_IS_RUNNING)" == "yes" ] && echo "WARNING: Build is running!" || echo "No builds running"
+
 nobuilds-running:
-	ifeq ($(BUILD_IS_RUNNING), 1)
-	    $(error Builds are running!)
-	endif
+	@[ "$(BUILD_IS_RUNNING)" == "no" ] && echo "No builds running" || { echo "ERROR: Build is running!"; false; }
+
+warn-builds-running:
+	@[ "$(BUILD_IS_RUNNING)" == "yes" ] && echo "WARNING: Build is running!" || echo "No builds running"
 
 clean: clean-core clean-online
 
 clean-core: stop
+	ssh dennis@buildmc "cd $(COREDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git reset --hard $(CORE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git checkout $(CORE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git pull -r $(CORE_REMOTE) $(CORE_BRANCH)'"
@@ -53,6 +59,7 @@ clean-core: stop
 
 
 clean-online: stop
+	ssh dennis@buildmc "cd $(ONLINEDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git reset --hard $(ONLINE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git checkout $(ONLINE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git pull -r $(ONLINE_REMOTE) $(ONLINE_BRANCH)'"
@@ -118,19 +125,15 @@ online.check.log:
 	ssh dennis@buildmc "tail $(ONLINE_CHECK_LOG)"
 
 status:
-	ssh dennis@buildmc "bash $(LODEVSCRIPTS_DIR)/printBuildInfo.sh"
+	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./printBuildInfo.sh"
 
 build-tarballs: nobuilds-running
-	ifndef CORE_BASE_COMMIT
-	    $(error CORE_BASE_COMMIT variable not set!)
-	endif
-	ifndef ONLINE_BASE_COMMIT
-	    $(error ONLINE_BASE_COMMIT variable not set!)
-	endif
+	@[ -z "$(CORE_BASE_COMMIT)" ] && echo "CORE_BASE_COMMIT variable not set!" && false
+	@[ -z "$(ONLINE_BASE_COMMIT)" ] && echo "ONLINE_BASE_COMMIT variable not set!" && false
 	@echo "Generating core build tarballs..."
-	ssh dennis@buildmc "bash $(LODEVSCRIPTS_DIR)/genCoreTarballs.sh $(CORE_BASE_COMMIT)"
+	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./genCoreTarballs.sh $(CORE_BASE_COMMIT)"
 	@echo "Generating online build tarballs..."
-	ssh dennis@buildmc "bash $(LODEVSCRIPTS_DIR)/genOnlineTarballs.sh $(ONLINE_BASE_COMMIT)"
+	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./genOnlineTarballs.sh $(ONLINE_BASE_COMMIT)"
 	@echo "Gzipping log files..."
 	ssh dennis@buildmc "cd $(WORKSPACE) && gzip -f *.log"
 	@echo "creating checksum file..."
@@ -145,10 +148,7 @@ list:
 	@ssh dennis@buildmc "cd $(WORKSPACE) && TZ=Asia/Kolkata ls -lhta"
 	@echo "-----------------------------------------"
 
-build2store:
-	ifeq ($(BUILD_IS_RUNNING), 1)
-	    $(warning Builds are still running!)
-	endif
+build2store: warn-builds-running
 	@echo "Copying build tarballs from buildmc:$(WORKSPACE) to storemc:$(STOREMC_BUILDTARBALLS_DIR)"
 	ssh root@storemc "mkdir -p $(STOREMC_BUILDTARBALLS_DIR)"
 	ssh dennis@buildmc "cd $(WORKSPACE) && scp $(SSH_NOHOSTCHECK_FLAGS) *.gz $(CSUMSFILE) root@storemc:$(STOREMC_BUILDTARBALLS_DIR)/"

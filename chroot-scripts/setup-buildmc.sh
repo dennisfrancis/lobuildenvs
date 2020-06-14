@@ -21,16 +21,18 @@ cat schroot.conf > /etc/schroot/schroot.conf
 cat fstab > /etc/schroot/default/fstab
 
 # Setup normal user
-
+echo "Setting up user ${UNAME}"
 useradd -l -u ${USERID} -G sudo -md ${UHOME} -s /bin/bash -p ${UNUSEDPASS} ${UNAME}
 # passwordless sudo for users in the 'sudo' group
 sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 
+echo "Copying keys to ${UNAME}'s home"
 # Copy ssh allowed keys
 cp -r /root/.ssh ${UHOME}/
 chown -R ${UNAME} ${UHOME}/.ssh
 
 # Setup workspace
+echo "Setting up ${WORKSPACE}"
 mkdir -p ${WORKSPACE}
 ## move the source tarballs to workspace.
 mv -f /root/${CORE_TARBALL_FNAME}   ${WORKSPACE}/
@@ -39,7 +41,7 @@ ORIGDIR=$(pwd)
 cd ${WORKSPACE}
 
 tar -xf ${CORE_TARBALL_FNAME} && tar -xf ${ONLINE_TARBALL_FNAME} || \
-	{ echo "Failed to extract ${CORE_TARBALL_FNAME} / ${ONLINE_TARBALL_FNAME}"; cd ${ORIGDIR}; exit -1; }
+	{ echo "Failed to extract ${CORE_TARBALL_FNAME} / ${ONLINE_TARBALL_FNAME}"; cd ${ORIGDIR}; rm -f ${LOCKFILE}; exit -1; }
 
 rm -f ${CORE_TARBALL_FNAME} ${ONLINE_TARBALL_FNAME}
 cd ${REPODIR}       && git reset --hard ${CORE_BRANCH}   && git checkout ${CORE_BRANCH}   && cd ${WORKSPACE}
@@ -55,6 +57,9 @@ sudo -u ${UNAME} bash -c "cd ${WORKSPACE}; rm -rf ${LOBUILDENVS_REPO_NAME}; git 
 
 
 # setup chroot from tarball
+echo "Extracting chroot tarball to ${CHRDIR}"
 rm -rf ${CHRDIR}
-tar -xf ${CHRTARBALL} --directory / || { echo "${CHRTARBALL} extraction to / failed !"; exit -1; }
+tar -xf ${CHRTARBALL} --directory / || { echo "${CHRTARBALL} extraction to / failed !"; rm -f ${LOCKFILE}; exit -1; }
+
+rm -f ${LOCKFILE}
 

@@ -16,7 +16,7 @@ cd ${WORKSPACE}
 
 echo "Generating build tarball with ${ONLINE_BUILDSUBDIRS}"
 
-tar -czf ${ONLINE_BUILD_TARBALL} ${ONLINE_BUILDSUBDIRS}
+tar --exclude=${ONLINEREPODIR}/.git -czf ${ONLINE_BUILD_TARBALL} ${ONLINE_BUILDSUBDIRS}
 
 echo "Done."
 

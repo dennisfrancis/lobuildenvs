@@ -17,13 +17,13 @@ ssh root@buildmc "test -d /root/.ssh && test -f /root/.ssh/${SSH_KEYNAME} && tes
 NEED_SSHKEYS=$?
 if [ ${NEED_SSHKEYS} -ne 0 ]
 then
-	ssh root@buildmc "mkdir -p /root/.ssh && chmod 700 && rm -f /root/.ssh/${SSH_KEYNAME}*" && \
-		scp ~/.ssh/${SSH_KEYNAME} root@buildmc:/root/.ssh/ && \
+	ssh root@buildmc "mkdir -p /root/.ssh && chmod 700 /root/.ssh && rm -f /root/.ssh/${SSH_KEYNAME}*" && \
+		scp ~/.ssh/${SSH_KEYNAME}* root@buildmc:/root/.ssh/ && \
 		ssh root@buildmc "chmod 644 /root/.ssh/${SSH_KEYNAME}.pub && chmod 600 /root/.ssh/${SSH_KEYNAME}"
 fi
 
 # Host alias for storemc in buildmc
-ssh root@buildmc "cat /root/.ssh/config | grep storemc" > /dev/null || \
+ssh root@buildmc "cat /root/.ssh/config | grep storemc" > /dev/null 2>&1 || \
 	grep -B 1 -A 3 'Host storemc' ~/.ssh/config  | ssh root@buildmc "tee -a /root/.ssh/config"
 
 # Copy chroot tarball, core.git/online.git tarballs
@@ -31,6 +31,8 @@ ssh root@buildmc "scp ${SSH_NOHOSTCHECK_FLAGS} root@storemc:/root/*.* /root/" ||
 	{ echo "copy from storemc failed!"; exit -1; }
 
 ssh root@buildmc "cd /root && sha256sum -c ${CSUMSFILE}" || { echo "Checksums failed for tarballs copied from storemc !"; exit -1; }
+
+echo "copy from storemc to buildmc successful [checksums PASSED]"
 
 BUILDSCRIPTSDIR="/root/${LOBUILDENVS_REPO_NAME}/chroot-scripts"
 

@@ -2,7 +2,7 @@
 
 source ../envvars.sh
 
-MAKEROOTPID=$(ps aux | grep build-nocheck | grep -v grep | awk '{print $2}')
+MAKEROOTPID=$(pgrep -a make | grep 'build-nocheck' | cut -f 1 -d' ')
 
 echo ""
 
