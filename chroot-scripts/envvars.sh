@@ -8,8 +8,8 @@ USERID=1000
 UNUSEDPASS=dennis
 
 # workspace dir in the host
-#WORKSPACE="/workspace"
-WORKSPACE=/home/dennis/devel
+WORKSPACE="/workspace"
+#WORKSPACE=/home/dennis/devel
 
 # chroot system
 DEBVERSION=buster
@@ -39,10 +39,10 @@ ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 
 CORE_REMOTE=github
-CORE_BRANCH=feature/calc-coordinates
+CORE_BRANCH=chart-hatch-label
 
 ONLINE_REMOTE=github
-ONLINE_BRANCH=feature/calc-coordinates
+ONLINE_BRANCH=master
 
 CSUMSFILE=checksums.txt
 
@@ -77,7 +77,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=4
+NPARALLEL=2
 
 # storemc vars
 STOREMC_BUILDTARBALLS_DIR=/root/build
