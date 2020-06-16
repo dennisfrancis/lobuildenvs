@@ -162,7 +162,7 @@ build2store: warn-builds-running
 	ssh root@storemc "mkdir -p $(STOREMC_BUILDTARBALLS_DIR)"
 	ssh dennis@buildmc "cd $(WORKSPACE) && scp $(SSH_NOHOSTCHECK_FLAGS) *.gz $(CSUMSFILE) root@storemc:$(STOREMC_BUILDTARBALLS_DIR)/"
 	ssh root@storemc "cd $(STOREMC_BUILDTARBALLS_DIR) && sha256sum -c $(CSUMSFILE)"
-	@echo "Copy successfull (checksums passed)"
+	@echo "Copy successful (checksums passed)"
 
 download:
 	scp root@storemc:$(STOREMC_BUILDTARBALLS_DIR)/*.gz $(WORKSPACE)/

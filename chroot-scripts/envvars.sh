@@ -3,12 +3,12 @@ SSH_KEYNAME=id_rsa_build
 
 # user settings
 UNAME=dennis
-UHOME=/home/$UNAME
+UHOME=/home/${UNAME}
 USERID=1000
 UNUSEDPASS=dennis
 
 # workspace dir in the host
-WORKSPACE="/workspace"
+WORKSPACE=/workspace
 #WORKSPACE=/home/dennis/devel
 
 # chroot system
