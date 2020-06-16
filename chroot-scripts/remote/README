@@ -39,12 +39,12 @@
 7. "git push" to update lobuildenvs.git in github
 
 
-8. "make setup-buildmc"
+8. "make setup-buildmc && make update-packages"
 
 
 9. Build and run checks
 
-	"make clean"   ; resets repos, runs make clean in buildmc (there are
+	"make init"   ; resets repos, runs make clean in buildmc (there are
 			 clean-core, clean-online if you need to do this separately)
 
 	---- Core

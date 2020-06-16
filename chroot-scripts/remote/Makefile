@@ -16,7 +16,8 @@ NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 	core.git.pull online.git.pull core.log online.log status \
 	core.check.log online.check.log \
 	build2store buildsession build-tarballs download extract-local \
-	nobuilds-running setup-buildmc upload list warn-builds-running nobuilds-running-local
+	nobuilds-running setup-buildmc upload list warn-builds-running nobuilds-running-local \
+	init init-core init-online update-packages
 
 noop:
 	@echo "No-op target"
@@ -48,22 +49,30 @@ nobuilds-running:
 warn-builds-running:
 	@[ "$(BUILD_IS_RUNNING)" == "yes" ] && echo "WARNING: Build is running!" || echo "No builds running"
 
-clean: clean-core clean-online
+init: init-core init-online
 
-clean-core: stop
+update-packages: stop
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y'"
+
+init-core: stop
 	ssh dennis@buildmc "cd $(COREDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git reset --hard $(CORE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git checkout $(CORE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git pull -r $(CORE_REMOTE) $(CORE_BRANCH)'"
-	-ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'make clean'"
 
-
-clean-online: stop
+init-online: stop
 	ssh dennis@buildmc "cd $(ONLINEDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git reset --hard $(ONLINE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git checkout $(ONLINE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git pull -r $(ONLINE_REMOTE) $(ONLINE_BRANCH)'"
-	-ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'make clean'"
+
+clean: clean-core clean-online
+
+clean-core: stop
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'make clean'"
+
+clean-online: stop
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'make clean'"
 
 stop: buildsession
 	-ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'pkill make; pkill clang'"
