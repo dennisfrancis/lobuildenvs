@@ -17,7 +17,8 @@ NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 	core.check.log online.check.log \
 	build2store buildsession build-tarballs download extract-local \
 	nobuilds-running setup-buildmc upload list warn-builds-running nobuilds-running-local \
-	init init-core init-online update-packages
+	init init-core init-online update-packages \
+	extract-local-core extract-local-online
 
 noop:
 	@echo "No-op target"
@@ -170,12 +171,17 @@ download:
 	cd $(WORKSPACE) && sha256sum -c $(CSUMSFILE)
 	@echo "Finished downloading from storemc (checksums PASSED)"
 
-extract-local: $(CORE_BUILD_TARBALL) $(CORE_CHANGEDFILES_TARBALL) $(ONLINE_BUILD_TARBALL) $(ONLINE_CHANGEDFILES_TARBALL)
+extract-local: extract-local-core extract-local-online
+
+extract-local-core: $(CORE_BUILD_TARBALL) $(CORE_CHANGEDFILES_TARBALL)
 	@echo "Extracting $(CORE_BUILD_TARBALL) and $(CORE_CHANGEDFILES_TARBALL) ..."
 	cd $(WORKSPACE) && tar -xf $(CORE_BUILD_TARBALL) && tar -xf $(CORE_CHANGEDFILES_TARBALL)
+	@echo "Done extracting for core"
+
+extract-local-online: $(ONLINE_BUILD_TARBALL) $(ONLINE_CHANGEDFILES_TARBALL)
 	@echo "Extracting $(ONLINE_BUILD_TARBALL) and $(ONLINE_CHANGEDFILES_TARBALL) ..."
 	cd $(WORKSPACE) && tar -xf $(ONLINE_BUILD_TARBALL) && tar -xf $(ONLINE_CHANGEDFILES_TARBALL)
-	@echo "Done"
+	@echo "Done extracting for online"
 
 upload:
 	bash ./upload_to_store.sh
