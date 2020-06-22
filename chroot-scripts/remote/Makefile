@@ -18,7 +18,7 @@ NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 	build2store buildsession build-tarballs download extract-local \
 	nobuilds-running setup-buildmc upload list warn-builds-running nobuilds-running-local \
 	init init-core init-online update-packages \
-	extract-local-core extract-local-online
+	extract-local-core extract-local-online setupnpm
 
 noop:
 	@echo "No-op target"
@@ -92,7 +92,7 @@ core.incbuild: buildsession autogen.input nobuilds-running
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'make build-nocheck >> $(CORE_BUILD_LOG) 2>&1 &'"
 
-online: buildsession nobuilds-running $(NPM)
+online: buildsession nobuilds-running setupnpm
 	@echo "Starting build in $(ONLINEDIR)"
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && (./autogen.sh && $(ONLINE_CONFIG_CMD) && make -j$(NPARALLEL)) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
@@ -102,7 +102,7 @@ online.incbuild: buildsession nobuilds-running
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && make -j$(NPARALLEL) >> $(ONLINE_BUILD_LOG) 2>&1 &'"
 
-$(NPM):
+setupnpm:
 	@echo "Setting up nvm"
 	ssh dennis@buildmc "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | NODE_VERSION=v13.6.0 bash"
 
