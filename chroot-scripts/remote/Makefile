@@ -53,7 +53,7 @@ warn-builds-running:
 init: init-core init-online
 
 update-packages: stop
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y'"
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y && sudo apt-get install -y xvfb'"
 
 init-core: stop
 	ssh dennis@buildmc "cd $(COREDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
@@ -116,6 +116,11 @@ online.check: buildsession nobuilds-running
 		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && make $(ONLINE_MAKECHECK_TARGETS) >> $(ONLINE_CHECK_LOG) 2>&1 &'"
 	@echo "Started online checks"
 
+online.cypress-check: buildsession nobuilds-running
+	ssh dennis@buildmc \
+		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && cd cypress_test && make check >> $(ONLINE_CHECK_LOG) 2>&1 &'"
+	@echo "Started online cypress checks"
+
 core.git.pull:
 	ssh dennis@buildmc "cd $(COREDIR) && git pull -r $(CORE_REMOTE) $(CORE_BRANCH)"
 
@@ -123,21 +128,21 @@ online.git.pull:
 	ssh dennis@buildmc "cd $(ONLINEDIR) && git pull -r $(ONLINE_REMOTE) $(ONLINE_BRANCH)"
 
 core.log:
-	ssh dennis@buildmc "tail $(CORE_BUILD_LOG)"
+	ssh dennis@buildmc "tail -f $(CORE_BUILD_LOG)"
 
 core.check.log:
-	ssh dennis@buildmc "tail $(CORE_CHECK_LOG)"
+	ssh dennis@buildmc "tail -f $(CORE_CHECK_LOG)"
 
 online.log:
-	ssh dennis@buildmc "tail $(ONLINE_BUILD_LOG)"
+	ssh dennis@buildmc "tail -f $(ONLINE_BUILD_LOG)"
 
 online.check.log:
-	ssh dennis@buildmc "tail $(ONLINE_CHECK_LOG)"
+	ssh dennis@buildmc "tail -f $(ONLINE_CHECK_LOG)"
 
 status:
 	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./printBuildInfo.sh"
 
-build-tarballs: nobuilds-running
+build-tarballs:
 	@[ ! -z "$(CORE_BASE_COMMIT)" ] && true || { echo "CORE_BASE_COMMIT variable not set!" && false; }
 	@[ ! -z "$(ONLINE_BASE_COMMIT)" ] && true || { echo "ONLINE_BASE_COMMIT variable not set!" && false; }
 	@echo "Generating core build tarballs..."
