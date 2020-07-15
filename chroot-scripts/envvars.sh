@@ -39,10 +39,10 @@ ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 
 CORE_REMOTE=github
-CORE_BRANCH=fixbuild
+CORE_BRANCH=splitpanes-fixes
 
 ONLINE_REMOTE=github
-ONLINE_BRANCH=fixbuild
+ONLINE_BRANCH=splitpanes-fixes
 
 CSUMSFILE=checksums.txt
 
@@ -72,8 +72,8 @@ ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache -
 
 
 # make check targets
-#CORE_MAKECHECK_TARGETS="vcl.check sfx2.check svx.check editeng.check sc.check chart2.check desktop.check"
-CORE_MAKECHECK_TARGETS="sc.check desktop.check"
+CORE_MAKECHECK_TARGETS="vcl.check sfx2.check svx.check editeng.check sc.check chart2.check desktop.check"
+#CORE_MAKECHECK_TARGETS="sc.check desktop.check"
 ONLINE_MAKECHECK_TARGETS="check"
 
 

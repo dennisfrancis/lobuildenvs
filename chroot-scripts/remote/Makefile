@@ -12,7 +12,7 @@ NPM = $(UHOME)/.nvm/versions/node/v13.6.0/bin/npm
 
 .PHONY: noop mydebug clean-core clean-online clean stop \
 	autogen.input core core.incbuild online online.incbuild \
-	core.check online.check \
+	core.check online.check online.unitcheck online.cypress-check \
 	core.git.pull online.git.pull core.log online.log status \
 	core.check.log online.check.log \
 	build2store buildsession build-tarballs download extract-local \
@@ -114,7 +114,12 @@ core.check: buildsession nobuilds-running
 online.check: buildsession nobuilds-running
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && make $(ONLINE_MAKECHECK_TARGETS) >> $(ONLINE_CHECK_LOG) 2>&1 &'"
-	@echo "Started online checks"
+	@echo "Started online checks (including cypress)"
+
+online.unitcheck: buildsession nobuilds-running
+	ssh dennis@buildmc \
+		"schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'source ~/.nvm/nvm.sh && cd test && make $(ONLINE_MAKECHECK_TARGETS) >> $(ONLINE_CHECK_LOG) 2>&1 &'"
+	@echo "Started online unit checks (cypress excluded)"
 
 online.cypress-check: buildsession nobuilds-running
 	ssh dennis@buildmc \
