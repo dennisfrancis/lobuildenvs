@@ -41,8 +41,8 @@ ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=splitpanes-fixes
-ONLINE_BRANCH=splitpanes-fixes
+CORE_BRANCH=cp64-fixes
+ONLINE_BRANCH=co44-fixes
 
 CSUMSFILE=checksums.txt
 
@@ -78,7 +78,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=8
+NPARALLEL=2
 
 # storemc vars
 STOREMC_BUILDTARBALLS_DIR=/root/build
