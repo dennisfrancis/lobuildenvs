@@ -50,22 +50,28 @@ nobuilds-running:
 warn-builds-running:
 	@[ "$(BUILD_IS_RUNNING)" == "yes" ] && echo "WARNING: Build is running!" || echo "No builds running"
 
+buildmc-init: setup-buildmc update-packages init
+
+getbuilds: build-tarballs build2store download extract-local
+
 init: init-core init-online
 
 update-packages: stop
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y && sudo apt-get install -y xvfb'"
 
 init-core: stop
-	ssh dennis@buildmc "cd $(COREDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git reset --hard $(CORE_BRANCH)'" && \
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'git clone --depth 10 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)'" && \
+		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'tar -xf $(CORE_EXTERNALS_TARBALL_FNAME)'" && \
+		rsync -vrt --size-only --existing --exclude '.git' $(COREDIR)/ dennis@buildmc:$(COREDIR)/ &&
+		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git reset --hard $(CORE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git checkout $(CORE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git pull -r $(CORE_REMOTE) $(CORE_BRANCH)'"
+		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git pull -r origin $(CORE_BRANCH)'"
 
 init-online: stop
-	ssh dennis@buildmc "cd $(ONLINEDIR) && sed -i.bkup -e 's!git@github\.com:!https://github.com/!' .git/config"
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git reset --hard $(ONLINE_BRANCH)'" && \
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'git clone --depth 10 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)'" && \
+		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git reset --hard $(ONLINE_BRANCH)'" && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git checkout $(ONLINE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git pull -r $(ONLINE_REMOTE) $(ONLINE_BRANCH)'"
+		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git pull -r origin $(ONLINE_BRANCH)'"
 
 clean: clean-core clean-online
 
@@ -87,7 +93,7 @@ core: buildsession autogen.input nobuilds-running
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c '(./autogen.sh && make build-nocheck) >> $(CORE_BUILD_LOG) 2>&1 &'"
 
-core.incbuild: buildsession autogen.input nobuilds-running
+core.incbuild: buildsession nobuilds-running
 	@echo "Starting incremental build in $(COREDIR)"
 	ssh dennis@buildmc \
 		"schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'make build-nocheck >> $(CORE_BUILD_LOG) 2>&1 &'"
@@ -127,10 +133,10 @@ online.cypress-check: buildsession nobuilds-running
 	@echo "Started online cypress checks"
 
 core.git.pull:
-	ssh dennis@buildmc "cd $(COREDIR) && git pull -r $(CORE_REMOTE) $(CORE_BRANCH)"
+	ssh dennis@buildmc "cd $(COREDIR) && git pull -r origin $(CORE_BRANCH)"
 
 online.git.pull:
-	ssh dennis@buildmc "cd $(ONLINEDIR) && git pull -r $(ONLINE_REMOTE) $(ONLINE_BRANCH)"
+	ssh dennis@buildmc "cd $(ONLINEDIR) && git pull -r origin $(ONLINE_BRANCH)"
 
 core.log:
 	ssh dennis@buildmc "tail -f $(CORE_BUILD_LOG)"
@@ -145,6 +151,7 @@ online.check.log:
 	ssh dennis@buildmc "tail -f $(ONLINE_CHECK_LOG)"
 
 status:
+	ssh dennis@buildmc "uptime"
 	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./printBuildInfo.sh"
 
 build-tarballs:

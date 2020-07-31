@@ -32,16 +32,16 @@ LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 # core.git and online.git repodirs/tarballs
 REPODIR=core
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz
+CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
+COREURL="https://github.com/dennisfrancis/core.git"
 
 ONLINEREPODIR=online
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
+ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_REMOTE=github
 CORE_BRANCH=splitpanes-fixes
-
-ONLINE_REMOTE=github
 ONLINE_BRANCH=splitpanes-fixes
 
 CSUMSFILE=checksums.txt
@@ -52,7 +52,7 @@ BUILD_SESSION=session:build
 
 # Build tarballs
 CORE_BUILD_TARBALL=${COREDIR}-build.tar.gz
-CORE_BUILDSUBDIRS="${REPODIR}/instdir ${REPODIR}/workdir ${REPODIR}/external/tarballs"
+CORE_BUILDSUBDIRS="${REPODIR}/instdir ${REPODIR}/workdir ${REPODIR}/external"
 CORE_CHANGEDFILES_TARBALL=${COREDIR}-chgd-files.tar.gz
 
 ONLINE_BUILD_TARBALL=${ONLINEDIR}-build.tar.gz
@@ -93,3 +93,4 @@ LOCAL_CHRTARBALL=${LOCAL_CHROOT_TARBALL_DIR}/${CHRNAME}.tar.gz
 LOCAL_SOURCE_TARBALL_DIR=/media/data/source-tarballs
 CORE_TARBALL=${LOCAL_SOURCE_TARBALL_DIR}/${CORE_TARBALL_FNAME}
 ONLINE_TARBALL=${LOCAL_SOURCE_TARBALL_DIR}/${ONLINE_TARBALL_FNAME}
+CORE_EXTERNALS_TARBALL=${LOCAL_SOURCE_TARBALL_DIR}/${CORE_EXTERNALS_TARBALL_FNAME}

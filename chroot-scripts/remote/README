@@ -5,9 +5,7 @@
 	ONLINEREPODIR
 	----
 
-	CORE_REMOTE
 	CORE_BRANCH
-	ONLINE_REMOTE
 	ONLINE_BRANCH
 	----
 
@@ -19,8 +17,7 @@
 	----
 
 
-2. Commit and push to CORE_REMOTE/CORE_BRANCH for core.git and
-   ONLINE_REMOTE/ONLINE_BRANCH
+2. Commit and push to CORE_BRANCH and ONLINE_BRANCH
 
 
 3. Run ./autogen.sh in both core and online local repos
@@ -39,13 +36,14 @@
 7. "git push" to update lobuildenvs.git in github
 
 
-8. "make setup-buildmc && make update-packages"
+8. "make buildmc-init"  :
+	which is a shortcut for
+	make setup-buildmc &&
+		make update-packages &&
+		make init
 
 
 9. Build and run checks
-
-	"make init"   ; resets repos, runs make clean in buildmc (there are
-			 clean-core, clean-online if you need to do this separately)
 
 	---- Core
 
@@ -90,24 +88,24 @@
 
 	"make list"
 
+9.1. "make getbuilds" ; gets the build to local machine (shortcut for steps 10-13)
+
+	10. "make build-tarballs" ; creates build tarballs, gzips the logs, checksums all generated files.
 
 
-10. "make build-tarballs" ; creates build tarballs, gzips the logs, checksums all generated files.
+	11. "make build2store"   ; copy all build/log tarballs/files to storemc with checksum protection.
 
 
-11. "make build2store"   ; copy all build/log tarballs/files to storemc with checksum protection.
+	---- Now the buildmc can be destroyed ------------------------
 
 
----- Now the buildmc can be destroyed ------------------------
+	12. "make download"   ; Downloads all build/log tarballs/files to local machine from storemc
 
 
-12. "make download"   ; Downloads all build/log tarballs/files to local machine from storemc
+	---- Now the storemc can be destroyed ------------------------
 
 
----- Now the storemc can be destroyed ------------------------
-
-
-13. "make extract-local"  ; Extract all build tarballs in local machine
+	13. "make extract-local"  ; Extract all build tarballs in local machine
 
 
 14. Check if 'make build-nocheck' (core) / 'make' (online) works without

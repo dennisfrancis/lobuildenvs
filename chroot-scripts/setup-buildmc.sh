@@ -34,20 +34,11 @@ chown -R ${UNAME} ${UHOME}/.ssh
 # Setup workspace
 echo "Setting up ${WORKSPACE}"
 mkdir -p ${WORKSPACE}
-## move the source tarballs to workspace.
-mv -f /root/${CORE_TARBALL_FNAME}   ${WORKSPACE}/
-mv -f /root/${ONLINE_TARBALL_FNAME} ${WORKSPACE}/
-ORIGDIR=$(pwd)
-cd ${WORKSPACE}
 
-tar -xf ${CORE_TARBALL_FNAME} && tar -xf ${ONLINE_TARBALL_FNAME} || \
-	{ echo "Failed to extract ${CORE_TARBALL_FNAME} / ${ONLINE_TARBALL_FNAME}"; cd ${ORIGDIR}; rm -f ${LOCKFILE}; exit -1; }
 
-rm -f ${CORE_TARBALL_FNAME} ${ONLINE_TARBALL_FNAME}
-cd ${REPODIR}       && git reset --hard ${CORE_BRANCH}   && git checkout ${CORE_BRANCH}   && cd ${WORKSPACE}
-cd ${ONLINEREPODIR} && git reset --hard ${ONLINE_BRANCH} && git checkout ${ONLINE_BRANCH} && cd ${WORKSPACE}
+## move the core.git externals tarballs to workspace.
+mv -f /root/${CORE_EXTERNALS_TARBALL_FNAME}   ${WORKSPACE}/
 
-cd ${ORIGDIR}
 chown -R ${UNAME} ${WORKSPACE}
 chmod -R 755 ${WORKSPACE}
 
