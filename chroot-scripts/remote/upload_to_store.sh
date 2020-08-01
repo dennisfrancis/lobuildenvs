@@ -16,7 +16,7 @@ then
 	echo "${CORE_EXTERNALS_TARBALL} already exists, not regenerating..."
 else
 	echo "Creating core.git externals tarball ${CORE_EXTERNALS_TARBALL_FNAME} from ${WORKSPACE}/${REPODIR}"
-	tar -czf ${CORE_EXTERNALS_TARBALL} "${REPODIR}/.git" "${REPODIR}/external/tarballs"
+	tar -czf ${CORE_EXTERNALS_TARBALL} "${REPODIR}/external/tarballs"
 fi
 
 echo ""

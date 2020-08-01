@@ -60,18 +60,13 @@ update-packages: stop
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y && sudo apt-get install -y xvfb'"
 
 init-core: stop
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'git clone --depth 10 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)'" && \
+	ssh dennis@buildmc 'cd $(WORKSPACE) && git clone --depth 10 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)' && \
 		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'tar -xf $(CORE_EXTERNALS_TARBALL_FNAME)'" && \
-		rsync -vrt --size-only --existing --exclude '.git' $(COREDIR)/ dennis@buildmc:$(COREDIR)/ &&
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git reset --hard $(CORE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git checkout $(CORE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(COREDIR) -- bash -c 'git pull -r origin $(CORE_BRANCH)'"
+		rsync -vrt --size-only --existing --exclude '.git' $(COREDIR)/ dennis@buildmc:$(COREDIR)/ && \
+		ssh dennis@buildmc "cd $(WORKSPACE) && mkdir -p bkup && mv $(CORE_EXTERNALS_TARBALL_FNAME) bkup/"
 
 init-online: stop
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c 'git clone --depth 10 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git reset --hard $(ONLINE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git checkout $(ONLINE_BRANCH)'" && \
-		ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(ONLINEDIR) -- bash -c 'git pull -r origin $(ONLINE_BRANCH)'"
+	ssh dennis@buildmc 'cd $(WORKSPACE) && git clone --depth 10 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)'
 
 clean: clean-core clean-online
 
@@ -187,6 +182,12 @@ download:
 	scp root@storemc:$(STOREMC_BUILDTARBALLS_DIR)/$(CSUMSFILE) $(WORKSPACE)/
 	cd $(WORKSPACE) && sha256sum -c $(CSUMSFILE)
 	@echo "Finished downloading from storemc (checksums PASSED)"
+
+download-direct: warn-builds-running
+	scp dennis@buildmc:$(WORKSPACE)/*.gz $(WORKSPACE)/
+	scp dennis@buildmc:$(WORKSPACE)/$(CSUMSFILE) $(WORKSPACE)/
+	cd $(WORKSPACE) && sha256sum -c $(CSUMSFILE)
+	@echo "Finished downloading to local machine (direct) (checksums PASSED)"
 
 extract-local: extract-local-core extract-local-online
 
