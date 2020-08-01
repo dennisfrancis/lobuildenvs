@@ -30,19 +30,19 @@ LODEVSCRIPTS_DIR=${LODEVSETUP_DIR}
 LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 
 # core.git and online.git repodirs/tarballs
-REPODIR=core
+REPODIR=cp62
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz
 CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
 COREURL="https://github.com/dennisfrancis/core.git"
 
-ONLINEREPODIR=online
+ONLINEREPODIR=co42
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=cp64-fixes
-ONLINE_BRANCH=co44-fixes
+CORE_BRANCH=cp62-fixes
+ONLINE_BRANCH=co42-fixes
 
 CSUMSFILE=checksums.txt
 
@@ -68,7 +68,7 @@ ONLINE_CHECK_LOG=${WORKSPACE}/online-check.log
 
 
 # ./configure command for online
-ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress"
+ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug"
 
 
 # make check targets
