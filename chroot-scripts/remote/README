@@ -26,7 +26,7 @@
 4. Start storemc, update ip in ~/.ssh/config
 
 
-5. "make upload"
+5. "make storemc-init"
 
 --------- start buildmc ------------------------------
 

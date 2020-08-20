@@ -78,10 +78,12 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=2
+NPARALLEL=8
 
 # storemc vars
-STOREMC_BUILDTARBALLS_DIR=/root/build
+STOREMC_EXTRA_BLKDEV=/dev/sdc
+STOREMC_EXTRA_MOUNT_DIR=/media/extra
+STOREMC_BUILDTARBALLS_DIR=${STOREMC_EXTRA_MOUNT_DIR}/build
 
 # SSH options
 SSH_NOHOSTCHECK_FLAGS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"

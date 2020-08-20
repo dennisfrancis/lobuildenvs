@@ -202,8 +202,12 @@ extract-local-online: $(ONLINE_BUILD_TARBALL) $(ONLINE_CHANGEDFILES_TARBALL)
 	@echo "Done extracting for online"
 
 upload:
-	bash ./upload_to_store.sh
+	@echo "This is not needed anymore. Run 'make storemc-init' instead."
+	#bash ./upload_to_store.sh
 
 setup-buildmc:
 	bash ./setup_build_machine.sh
+
+storemc-init:
+	bash ./setup_store_machine.sh
 
