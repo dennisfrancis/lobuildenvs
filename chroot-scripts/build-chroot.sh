@@ -43,7 +43,7 @@ sudo -u ${UNAME} bash -c "cd ${WORKSPACE}; rm -rf ${LOBUILDENVS_REPO_NAME}; git 
 rm -rf ${CHRDIR}
 mkdir -p ${CHRDIR}
 
-debootstrap --include=sudo ${DEBVERSION} ${CHRDIR} http://deb.debian.org/debian
+debootstrap --include=sudo ${DEBVERSION} ${CHRDIR} http://archive.ubuntu.com/ubuntu
 
 # setup LibreOffice dev environment in the chroot
 echo ""

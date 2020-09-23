@@ -12,7 +12,7 @@ UNUSEDPASS=dennis
 WORKSPACE=/home/dennis/devel
 
 # chroot system
-DEBVERSION=buster
+DEBVERSION=focal
 CHRNAME=lodev-${DEBVERSION}
 CHRDIR=/srv/chroot/${CHRNAME}
 CHRWORKSPACE=${CHRDIR}/${WORKSPACE}
