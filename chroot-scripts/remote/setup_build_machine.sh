@@ -24,7 +24,7 @@ fi
 
 # Host alias for storemc in buildmc
 ssh root@buildmc "cat /root/.ssh/config | grep storemc" > /dev/null 2>&1 || \
-	grep -B 1 -A 3 'Host storemc' ~/.ssh/config  | ssh root@buildmc "tee -a /root/.ssh/config"
+	grep -B 1 -A 3 ^'Host storemc' ~/.ssh/config  | ssh root@buildmc "tee -a /root/.ssh/config"
 
 # Copy chroot tarball, core.git/online.git tarballs
 ssh root@buildmc "scp ${SSH_NOHOSTCHECK_FLAGS} root@storemc:/root/*.* /root/" || \
