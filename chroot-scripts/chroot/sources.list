@@ -1,9 +1,21 @@
-# See https://wiki.debian.org/SourcesList for more information.
-deb http://deb.debian.org/debian buster main contrib non-free
-deb-src http://deb.debian.org/debian buster main contrib non-free
+deb http://archive.ubuntu.com/ubuntu focal main restricted
+deb-src http://archive.ubuntu.com/ubuntu focal multiverse restricted main universe #Added by software-properties
 
-deb http://deb.debian.org/debian buster-updates main contrib non-free
-deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+deb http://archive.ubuntu.com/ubuntu focal-updates main restricted
+deb-src http://archive.ubuntu.com/ubuntu focal-updates multiverse restricted main universe #Added by software-properties
 
-deb http://security.debian.org/debian-security/ buster/updates main contrib non-free
-deb-src http://security.debian.org/debian-security/ buster/updates main contrib non-free
+deb http://archive.ubuntu.com/ubuntu focal universe
+deb http://archive.ubuntu.com/ubuntu focal-updates universe
+
+deb http://archive.ubuntu.com/ubuntu focal multiverse
+deb http://archive.ubuntu.com/ubuntu focal-updates multiverse
+
+deb http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse #Added by software-properties
+
+
+deb http://archive.ubuntu.com/ubuntu focal-security main restricted
+deb-src http://archive.ubuntu.com/ubuntu focal-security multiverse restricted main universe #Added by software-properties
+deb http://archive.ubuntu.com/ubuntu focal-security universe
+deb http://archive.ubuntu.com/ubuntu focal-security multiverse
+
