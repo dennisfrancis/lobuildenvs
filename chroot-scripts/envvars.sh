@@ -78,7 +78,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=2
+NPARALLEL=4
 
 # storemc vars
 STOREMC_EXTRA_BLKDEV=/dev/sdc
