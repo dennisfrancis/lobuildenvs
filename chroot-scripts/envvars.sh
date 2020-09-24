@@ -68,7 +68,7 @@ ONLINE_CHECK_LOG=${WORKSPACE}/online-check.log
 
 
 # ./configure command for online
-ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress"
+ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-symbols --enable-cypress"
 
 
 # make check targets
