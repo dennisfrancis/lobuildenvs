@@ -57,7 +57,7 @@ getbuilds: build-tarballs build2store download extract-local
 init: init-core init-online
 
 update-packages: stop
-	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y && sudo apt-get install -y xvfb'"
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(UHOME) -- bash -c 'sudo apt-get update && sudo apt-get full-upgrade -y && sudo apt-get install -y xvfb chromium-browser'"
 
 init-core: stop
 	ssh dennis@buildmc 'cd $(WORKSPACE) && git clone --depth 10 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)' && \
