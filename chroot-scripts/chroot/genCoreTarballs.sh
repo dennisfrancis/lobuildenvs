@@ -37,7 +37,7 @@ cd -
 CHANGED_FILES=""
 for fname in ${FLIST}
 do
-	CHANGED_FILES="${CHANGED_FILES} ${COREDIR}/${fname}"
+	CHANGED_FILES="${CHANGED_FILES} ${REPODIR}/${fname}"
 done
 
 tar -czf ${CORE_CHANGEDFILES_TARBALL} ${CHANGED_FILES}
