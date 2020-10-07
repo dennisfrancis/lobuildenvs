@@ -211,3 +211,6 @@ setup-buildmc:
 storemc-init:
 	bash ./setup_store_machine.sh
 
+list-storemc:
+	ssh root@storemc "ls -lht /root/ && ls -lht /media/extra/build"
+
