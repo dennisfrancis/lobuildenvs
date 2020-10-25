@@ -13,7 +13,7 @@ touch ${LOCKFILE}
 
 cat sources.list > /etc/apt/sources.list
 apt-get update
-apt-get full-upgrade -y
+#apt-get full-upgrade -y
 apt-get install -y schroot debootstrap rsync util-linux git procps wget curl
 
 # Setup schroot config
