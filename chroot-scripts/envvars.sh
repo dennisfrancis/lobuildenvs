@@ -41,8 +41,8 @@ ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=fixes/spellcheck-cache
-ONLINE_BRANCH=fixes/spellcheck-cache
+CORE_BRANCH=fixes/calc-online
+ONLINE_BRANCH=fixes/canvas-rendering
 
 CSUMSFILE=checksums.txt
 
@@ -78,7 +78,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=8
+NPARALLEL=2
 
 # storemc vars
 STOREMC_EXTRA_BLKDEV=/dev/sdc
