@@ -51,6 +51,7 @@ warn-builds-running:
 	@[ "$(BUILD_IS_RUNNING)" == "yes" ] && echo "WARNING: Build is running!" || echo "No builds running"
 
 buildmc-init: setup-buildmc update-packages init
+	@echo "Buildmc is ready to start the builds."
 
 getbuilds: build-tarballs build2store download extract-local
 
@@ -213,4 +214,29 @@ storemc-init:
 
 list-storemc:
 	ssh root@storemc "ls -lht /root/ && ls -lht /media/extra/build"
+
+
+
+
+doall: start-buildall
+	@echo "Launching (background) status-check + download + extract script (getbuilds.sh) in local-machine [see $(GETBUILDS_LOG)]"
+	bash ./getbuilds.sh > /tmp/getbuilds-bg.log 2>&1 &
+	@echo "Use the make targets : status, core.log, online.log to see the progress"
+
+copyscripts:
+	@echo "[copyscripts] Copying $(ENVFILE) and buildall.sh to workspace($(WORKSPACE), local and buildmc)"
+	cp $(ENVFILE) $(WORKSPACE)/
+	scp $(ENVFILE) dennis@buildmc:$(WORKSPACE)/
+	cp buildall.sh $(WORKSPACE)/
+	scp buildall.sh dennis@buildmc:$(WORKSPACE)/
+
+start-buildall: buildmc-init buildsession autogen.input nobuilds-running setupnpm copyscripts
+	@echo "[start-buildall] --------------------- It is now safe to remove storemc ------------------------------"
+	@echo "[start-buildall] Starting builds in the background."
+	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c './buildall.sh > /dev/null 2>&1 &'"
+
+gb-status:
+	@echo "[gb-status] --- head -50 $(GETBUILDS_LOG)  ------------"
+	@head -50 $(GETBUILDS_LOG)
+
 

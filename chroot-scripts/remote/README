@@ -36,14 +36,15 @@
 7. "git push" to update lobuildenvs.git in github
 
 
-8. "make buildmc-init"  :
-	which is a shortcut for
-	make setup-buildmc &&
-		make update-packages &&
-		make init
+8. "make doall"  ### When it says so, remove storemc.
+	Monitor progress with make-targets : status, core.log, online.log
+	# getbuilds.log in workspace can also be monitored for debugging "getbuilds.sh" background job
 
 
-9. Build and run checks
+Misc
+----
+
+Build and run checks
 
 	---- Core
 
@@ -88,7 +89,7 @@
 
 	"make list"
 
-9.1. "make getbuilds" ; gets the build to local machine (shortcut for steps 10-13)
+"make getbuilds" ; gets the build to local machine (shortcut for steps 10-13)
 
 	10. "make build-tarballs" ; creates build tarballs, gzips the logs, checksums all generated files.
 
@@ -108,7 +109,7 @@
 	13. "make extract-local"  ; Extract all build tarballs in local machine
 
 
-14. Check if 'make build-nocheck' (core) / 'make' (online) works without
+Check if 'make build-nocheck' (core) / 'make' (online) works without
     actual building.
 
 
