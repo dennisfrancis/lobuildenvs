@@ -40,14 +40,11 @@ mydebug: warn-builds-running
 
 init: init-core init-online
 
-stop:
-	pkill make; pkill clang
-
-init-core: stop
+init-core:
 	cd $(WORKSPACE)
 	git clone --depth 1000 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)
 
-init-online: stop
+init-online:
 	cd $(WORKSPACE)
 	git clone --depth 1000 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)
 
