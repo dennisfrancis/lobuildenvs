@@ -41,12 +41,10 @@ mydebug: warn-builds-running
 init: init-core init-online
 
 init-core:
-	cd $(WORKSPACE)
-	git clone --depth 1000 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)
+	cd $(WORKSPACE) && git clone --depth 1000 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)
 
 init-online:
-	cd $(WORKSPACE)
-	git clone --depth 1000 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)
+	cd $(WORKSPACE) && git clone --depth 1000 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)
 
 autogen.input: autogen.input
 	cat autogen.input | sed -e 's/--with-parallelism=.*/--with-parallelism=$(NPARALLEL)/' > $(COREDIR)/autogen.input
@@ -58,8 +56,7 @@ copyscripts:
 
 start-buildall: autogen.input copyscripts
 	@echo "[start-buildall] Starting builds in the background."
-	cd $(WORKSPACE)
-	./buildall.sh > /dev/null 2>&1 &
+	cd $(WORKSPACE) && ./buildall.sh > /dev/null 2>&1 &
 
 core.log:
 	tail -f $(CORE_BUILD_LOG)
