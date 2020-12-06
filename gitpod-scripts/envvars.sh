@@ -8,8 +8,8 @@ USERID=1000
 UNUSEDPASS=dennis
 
 # workspace dir in the host
-#WORKSPACE=/workspace
-WORKSPACE=/home/dennis/devel
+WORKSPACE=/workspace
+#WORKSPACE=/home/dennis/devel
 
 # chroot system
 DEBVERSION=focal
