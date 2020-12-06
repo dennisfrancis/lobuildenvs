@@ -147,7 +147,7 @@ online.check.log:
 	ssh dennis@buildmc "tail -f $(ONLINE_CHECK_LOG)"
 
 status:
-	ssh dennis@buildmc "uptime"
+	ssh dennis@buildmc "TZ=Asia/Kolkata uptime"
 	ssh dennis@buildmc "cd $(LODEVSCRIPTS_DIR) && bash ./printBuildInfo.sh"
 
 build-tarballs:
@@ -236,7 +236,7 @@ start-buildall: buildmc-init buildsession autogen.input nobuilds-running setupnp
 	ssh dennis@buildmc "schroot -c $(BUILD_SESSION) -r -d $(WORKSPACE) -- bash -c './buildall.sh > /dev/null 2>&1 &'"
 
 gb-status:
-	@echo "[gb-status] --- head -50 $(GETBUILDS_LOG)  ------------"
-	@head -50 $(GETBUILDS_LOG)
+	@echo "[gb-status] --- tail -50 $(GETBUILDS_LOG)  ------------"
+	@tail -50 $(GETBUILDS_LOG)
 
 

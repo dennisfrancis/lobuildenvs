@@ -61,6 +61,7 @@ do
         exit
 
     elif [ -f ${BUILDALL_FAILED} ]
+    then
         echo -e "\n---------------------------------\n[$(date)] Found ${BUILDALL_FAILED}" >> ${GETBUILDS_LOG}
     fi
 

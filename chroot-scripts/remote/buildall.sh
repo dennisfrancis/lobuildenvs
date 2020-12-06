@@ -2,10 +2,8 @@
 
 source ./envvars.sh
 
-BUILDALL_LOG=${WORKSPACE}/buildall.log
-BUILDALL_DONE=${WORKSPACE}/buildall.success
-BUILDALL_FAILED=${WORKSPACE}/buildall.failed
-BUILDALL_RUNNING=${WORKSPACE}/buildall.running
+rm -rf ${BUILDALL_SYNCDIR}
+mkdir -p ${BUILDALL_SYNCDIR}
 
 rm -f ${BUILDALL_DONE}
 rm -f ${BUILDALL_FAILED}
@@ -28,6 +26,8 @@ fi
 
 # Build online
 cd ${ONLINEDIR} && TZ=Asia/Kolkata echo "[$(date)] Building online..." >> ${BUILDALL_LOG} 2>&1
+source ~/.nvm/nvm.sh && (./autogen.sh && ${ONLINE_CONFIG_CMD} && make -j${NPARALLEL}) >> ${ONLINE_BUILD_LOG} 2>&1
+
 if [ $? -eq 0 ]
 then
     TZ=Asia/Kolkata echo "[$(date)] Finished building online." >> ${BUILDALL_LOG} 2>&1
