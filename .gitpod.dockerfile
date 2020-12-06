@@ -1,19 +1,19 @@
 FROM gitpod/workspace-full-vnc
 
-RUN sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal main restricted > /etc/apt/sources.list" \
-    && sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu focal multiverse restricted main universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-updates main restricted >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu focal-updates multiverse restricted main universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-updates universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal multiverse >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-updates multiverse >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-security main restricted >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu focal-security multiverse restricted main universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-security universe >> /etc/apt/sources.list" \
-    && sudo sh -c "echo deb http://archive.ubuntu.com/ubuntu focal-security multiverse >> /etc/apt/sources.list" \
+RUN sudo echo deb http://archive.ubuntu.com/ubuntu focal main restricted > /etc/apt/sources.list \
+    && sudo echo deb-src http://archive.ubuntu.com/ubuntu focal multiverse restricted main universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-updates main restricted >> /etc/apt/sources.list \
+    && sudo echo deb-src http://archive.ubuntu.com/ubuntu focal-updates multiverse restricted main universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-updates universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal multiverse >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-updates multiverse >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse >> /etc/apt/sources.list \
+    && sudo echo deb-src http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-security main restricted >> /etc/apt/sources.list \
+    && sudo echo deb-src http://archive.ubuntu.com/ubuntu focal-security multiverse restricted main universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-security universe >> /etc/apt/sources.list \
+    && sudo echo deb http://archive.ubuntu.com/ubuntu focal-security multiverse >> /etc/apt/sources.list \
     && sudo apt-get update \
     && sudo apt-get full-upgrade \
     && sudo apt-get install -y binutils locales sudo vim procps bash-completion \
