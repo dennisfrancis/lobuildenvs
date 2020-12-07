@@ -7,8 +7,8 @@ source ./envvars.sh
 echo "Gzipping log files..."
 cd ${WORKSPACE} && gzip -f *.log
 
-echo "creating checksum file..." >> ${GETBUILDS_LOG}
-cd ${WORKSPACE} && sha256sum *.gz > ${CSUMSFILE}"
+echo "creating checksum file..."
+cd ${WORKSPACE} && sha256sum *.gz > ${CSUMSFILE}
 
 echo "---List of files in ${WORKSPACE}---------"
 cd ${WORKSPACE} && TZ=Asia/Kolkata ls -lhta
@@ -30,3 +30,4 @@ cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' --port $2 
 cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' --port $2 ${ONLINEDIR}/ "$1":${ONLINEDIR}/
 
 echo "Done!"
+
