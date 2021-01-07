@@ -90,4 +90,4 @@ status:
 	ssh "$(BUILDMCLOGIN)" 'TZ=Asia/Kolkata uptime'
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && ./printBuildInfo.sh'
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && tail $(BUILDALL_LOG)'
-
+	tail -30 $(WORKSPACE)/getbuilds.log

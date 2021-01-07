@@ -44,7 +44,7 @@ ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
 CORE_BRANCH=fixes/calc-online
-ONLINE_BRANCH=private/dennisf/canvas-selections
+ONLINE_BRANCH=private/dennisf/selections-on-canvas
 
 CSUMSFILE=checksums.txt
 
