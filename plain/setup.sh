@@ -15,8 +15,9 @@ apt-get install -y build-essential git ccache junit4 gstreamer1.0-libav libkrb5-
 apt-get install -y libpng-dev libcap-dev python3-polib libpam0g-dev libgtk2.0-dev
 apt-get install -y clang libclang-dev llvm llvm-dev xvfb chromium-browser npm
 apt-get build-dep -y libreoffice
-pip install lxml
-pip install polib
+apt install -y python3-pip
+pip3 install lxml
+pip3 install polib
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/*
 
