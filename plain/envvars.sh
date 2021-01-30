@@ -44,7 +44,7 @@ ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
 CORE_BRANCH=fixes/calc-online
-ONLINE_BRANCH=private/dennisf/selections-on-canvas
+ONLINE_BRANCH=private/dennisf/overlay-on-canvas
 
 CSUMSFILE=checksums.txt
 
@@ -80,7 +80,7 @@ ONLINE_MAKECHECK_TARGETS="check"
 
 
 # number of parallel jobs to use in building
-NPARALLEL=2
+NPARALLEL=4
 
 # storemc vars
 STOREMC_EXTRA_BLKDEV=/dev/sdc

@@ -59,7 +59,7 @@ init-online:
 
 autogen.input: autogen.input
 	@echo "[autogen.input] Copying autogen.input"
-	ssh "${BUILDMCLOGIN}" 'cd $(WORKSPACE) && cat autogen.input | sed -e 's/--with-parallelism=.*/--with-parallelism=$(NPARALLEL)/' > $(COREDIR)/autogen.input'
+	ssh "${BUILDMCLOGIN}" 'cd $(WORKSPACE) && cat autogen.input | grep -v icecream | sed -e 's/--with-parallelism=.*/--with-parallelism=$(NPARALLEL)/' > $(COREDIR)/autogen.input'
 
 copyscripts:
 	@echo "[copyscripts] Copying $(ENVFILE) and buildall.sh to workspace($(WORKSPACE))"
