@@ -3,19 +3,21 @@
 
 [ "$(whoami)" != "root" ] && { echo "This needs to be run as root !"; exit -1; }
 
+
 source ./envvars.sh
+export DEBIAN_FRONTEND=noninteractive
 
 cat sources.list > /etc/apt/sources.list
 apt-get update
-apt-get full-upgrade -y
+apt-get full-upgrade -y -q
 
-apt-get install -y binutils locales sudo vim procps bash-completion nano wget curl rsync
+apt-get install -y -q binutils locales sudo vim procps bash-completion nano wget curl rsync
 locale-gen en_US.UTF-8
-apt-get install -y build-essential git ccache junit4 gstreamer1.0-libav libkrb5-dev nasm graphviz libpython3-dev valgrind libpoco-dev
-apt-get install -y libpng-dev libcap-dev python3-polib libpam0g-dev libgtk2.0-dev
-apt-get install -y clang libclang-dev llvm llvm-dev xvfb chromium-browser npm
-apt-get build-dep -y libreoffice
-apt install -y python3-pip
+apt-get install -y -q build-essential git ccache junit4 gstreamer1.0-libav libkrb5-dev nasm graphviz libpython3-dev valgrind libpoco-dev
+apt-get install -y -q libpng-dev libcap-dev python3-polib libpam0g-dev libgtk2.0-dev
+apt-get install -y -q clang libclang-dev llvm llvm-dev xvfb chromium-browser npm
+apt-get build-dep -y -q libreoffice
+apt install -y -q python3-pip
 pip3 install lxml
 pip3 install polib
 apt-get clean
