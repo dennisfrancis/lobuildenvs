@@ -1,0 +1,48 @@
+0. Update local system's packages.
+
+1. Set correct values to the variables in envvars.sh
+	----
+
+	REPODIR
+	ONLINEREPODIR
+	----
+
+	CORE_BRANCH
+	ONLINE_BRANCH
+	----
+
+	ONLINE_CONFIG_CMD (if you changed any flags from usual)
+	----
+
+	NPARALLEL (IMPORTANT !!! set this according to the #phy cores in
+		   buildmc)
+	----
+
+
+2. Commit and push to CORE_BRANCH and ONLINE_BRANCH
+
+
+3. Run ./autogen.sh in both core and online local repos
+
+
+4. Do 'make fetch' in core and create externals.tar.gz in ~/devel
+
+
+5. Start buildmc, update ip in ~/.ssh/config
+
+
+6. make setup
+
+
+7. Reboot buildmc
+
+
+7. make init
+
+
+8. make start-buildall
+
+
+9. make getbuilds
+
+
