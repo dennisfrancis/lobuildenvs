@@ -44,10 +44,10 @@ setup:
 	@echo "[setup] Finished setting up $(BUILDMC). Reboot $(BUILDMC) now !"
 
 init: init-core init-online
-	@echo "Uploading externals.tar.gz"
-	scp $(WORKSPACE)/externals.tar.gz "$(BUILDMCLOGIN)":$(WORKSPACE)/
-	@echo "Extracting externals.tar.gz"
-	ssh "$(BUILDMCLOGIN)" "cd $(WORKSPACE) && tar -xf externals.tar.gz"
+	@echo "Uploading $(CORE_EXTERNALS_TARBALL_FNAME)"
+	scp $(WORKSPACE)/$(CORE_EXTERNALS_TARBALL_FNAME) "$(BUILDMCLOGIN)":$(WORKSPACE)/
+	@echo "Extracting $(CORE_EXTERNALS_TARBALL_FNAME)"
+	ssh "$(BUILDMCLOGIN)" "cd $(WORKSPACE) && tar -xf $(CORE_EXTERNALS_TARBALL_FNAME)"
 
 init-core:
 	@echo "[init-core] Cloning core repo"
