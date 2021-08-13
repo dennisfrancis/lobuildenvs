@@ -32,19 +32,19 @@ LODEVSCRIPTS_DIR=${LODEVSETUP_DIR}
 LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 
 # core.git and online.git repodirs/tarballs
-REPODIR=cp2021
+REPODIR=core
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz
 CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
 COREURL="https://github.com/dennisfrancis/core.git"
 
-ONLINEREPODIR=online
+ONLINEREPODIR=co64
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=fixes/calc-online-cp2021
-ONLINE_BRANCH=private/dennisf/online-fixes
+CORE_BRANCH=fixes/calc-online
+ONLINE_BRANCH=private/dennisf/canvas-fixes
 
 CSUMSFILE=checksums.txt
 
