@@ -25,6 +25,15 @@ else
     exit -1
 fi
 
+if [ "${COREONLY}" -eq "1" ]
+then
+    echo "Skipping online build as COREONLY is set" >> ${BUILDALL_LOG} 2>&1
+    rm -f ${BUILDALL_RUNNING}
+    touch ${BUILDALL_DONE}
+    echo "SUCCESS" >> ${BUILDALL_LOG}
+    exit 0;
+fi
+
 # Build online
 cd ${ONLINEDIR} && TZ=Asia/Kolkata echo "[$(date)] Building online..." >> ${BUILDALL_LOG} 2>&1
 (./autogen.sh && ${ONLINE_CONFIG_CMD} && make -j${NPARALLEL}) >> ${ONLINE_BUILD_LOG} 2>&1

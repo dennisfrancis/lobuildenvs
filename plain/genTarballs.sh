@@ -4,7 +4,7 @@ source ./envvars.sh
 
 
 [ -d ${COREDIR} ] || { echo "Cannot access ${COREDIR} !!"; exit -1; }
-[ -d ${ONLINEDIR} ] || { echo "Cannot access ${ONLINEDIR} !!"; exit -1; }
+[ "${COREONLY}" -eq "1" ] || [ -d ${ONLINEDIR} ] || { echo "Cannot access ${ONLINEDIR} !!"; exit -1; }
 
 ORIGDIR="$(pwd)"
 
@@ -25,6 +25,14 @@ ls -lht ${CORE_BUILD_TARBALL}
 echo ""
 
 
+
+if [ "${COREONLY}" -eq "1" ]
+then
+    echo "COREONLY is set, so no online builds."
+    echo ""
+    cd "${ORIGDIR}"
+    exit 0;
+fi
 
 ##[2]## Generate online.git build tarball
 

@@ -32,20 +32,27 @@ do
         cd ${WORKSPACE} && sha256sum -c ${CSUMSFILE} >> ${GETBUILDS_LOG} 2>&1
 
         echo -e "\n[$(date)] Extracting ${CORE_BUILD_TARBALL} ..." >> ${GETBUILDS_LOG}
-	cd ${WORKSPACE}
-        tar -xf ${CORE_BUILD_TARBALL} >> ${GETBUILDS_LOG} 2>&1
-	echo "Done extracting for core" >> ${GETBUILDS_LOG}
-
-        echo -e "\n[$(date)] Extracting ${ONLINE_BUILD_TARBALL} ..." >> ${GETBUILDS_LOG}
         cd ${WORKSPACE}
-        tar -xf ${ONLINE_BUILD_TARBALL} >> ${GETBUILDS_LOG} 2>&1
-        echo "Done extracting for online" >> ${GETBUILDS_LOG}
+        tar -xf ${CORE_BUILD_TARBALL} >> ${GETBUILDS_LOG} 2>&1
+        echo "Done extracting for core" >> ${GETBUILDS_LOG}
 
-	echo "Syncing file timestamps (both core and online)"
-	cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' ${UNAME}@${BUILDMC}:${COREDIR}/ ${COREDIR}/
-	cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' ${UNAME}@${BUILDMC}:${ONLINEDIR}/ ${ONLINEDIR}/
+        if [ "${COREONLY}" -eq "0" ]
+        then
+            echo -e "\n[$(date)] Extracting ${ONLINE_BUILD_TARBALL} ..." >> ${GETBUILDS_LOG}
+            cd ${WORKSPACE}
+            tar -xf ${ONLINE_BUILD_TARBALL} >> ${GETBUILDS_LOG} 2>&1
+            echo "Done extracting for online" >> ${GETBUILDS_LOG}
+        fi
 
-        echo "Core/Online builds have been setup in local-machine. Check with 'make build-nocheck' etc then remove buildmc." >> ${GETBUILDS_LOG}
+        echo "Syncing file timestamps for core"  >> ${GETBUILDS_LOG}
+        cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' ${UNAME}@${BUILDMC}:${COREDIR}/ ${COREDIR}/
+        if [ "${COREONLY}" -eq "0" ]
+        then
+            echo "Syncing file timestamps for online"  >> ${GETBUILDS_LOG}
+            cd ${WORKSPACE} && rsync -vrt --size-only --existing --exclude '.git' ${UNAME}@${BUILDMC}:${ONLINEDIR}/ ${ONLINEDIR}/
+        fi
+
+        echo "The builds have been setup in local-machine. Check with 'make build-nocheck' etc then remove buildmc." >> ${GETBUILDS_LOG}
         echo -e "\n[$(date)] Done all, exiting..." >> ${GETBUILDS_LOG}
 
         exit

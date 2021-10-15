@@ -18,8 +18,12 @@ fi
 echo ""
 echo "core.git build space usage"
 du -sh ${COREDIR}/workdir ${COREDIR}/instdir
-echo "online.git build space usage"
-du -sh ${ONLINEDIR}/
+
+if [ "${COREONLY}" -eq "0" ]
+then
+	echo "online.git build space usage"
+	du -sh ${ONLINEDIR}/
+fi
 
 echo ""
 free -h

@@ -31,6 +31,9 @@ LODEVSETUP_DIR=${WORKSPACE}/${LOBUILDENVS_REPO_NAME}/chroot-scripts/chroot
 LODEVSCRIPTS_DIR=${LODEVSETUP_DIR}
 LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 
+## Build core only ----------------------------------------------
+COREONLY=0
+
 # core.git and online.git repodirs/tarballs
 REPODIR=cp2021
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz

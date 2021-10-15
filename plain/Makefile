@@ -48,14 +48,19 @@ init: init-core init-online
 	scp $(WORKSPACE)/$(CORE_EXTERNALS_TARBALL_FNAME) "$(BUILDMCLOGIN)":$(WORKSPACE)/
 	@echo "Extracting $(CORE_EXTERNALS_TARBALL_FNAME)"
 	ssh "$(BUILDMCLOGIN)" "cd $(WORKSPACE) && tar -xf $(CORE_EXTERNALS_TARBALL_FNAME)"
+	ssh "$(BUILDMCLOGIN)" "cd $(WORKSPACE) && mv $(CORE_EXTERNALS_TARBALL_FNAME) $(CORE_EXTERNALS_TARBALL_FNAME).bkup"
 
 init-core:
 	@echo "[init-core] Cloning core repo"
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && git clone --depth 1000 --single-branch --branch $(CORE_BRANCH) $(COREURL) $(REPODIR)'
 
 init-online:
-	@echo "[init-online] Cloning online repo"
-	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && git clone --depth 1000 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)'
+	@if [ "$(COREONLY)" -eq "1" ]; then \
+		echo "Skipping init-online as COREONLY is set"; \
+	else \
+		echo "[init-online] Cloning online repo"; \
+		ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && git clone --depth 1000 --single-branch --branch $(ONLINE_BRANCH) $(ONLINEURL) $(ONLINEREPODIR)'; \
+	fi
 
 autogen.input: autogen.input
 	@echo "[autogen.input] Copying autogen.input"
@@ -81,7 +86,11 @@ core.check.log:
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && tail -f $(CORE_CHECK_LOG)'
 
 online.log:
-	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && tail -f $(ONLINE_BUILD_LOG)'
+	@if [ "$(COREONLY)" -eq "1" ]; then \
+		echo "Online is not being built as COREONLY is set"; \
+	else \
+		ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && tail -f $(ONLINE_BUILD_LOG)'; \
+	fi
 
 online.check.log:
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && tail -f $(ONLINE_CHECK_LOG)'
