@@ -14,7 +14,7 @@ BUILDMCLOGIN=${UNAME}@${BUILDMC}
 WORKSPACE=/home/dennis/devel
 
 # chroot system
-DEBVERSION=focal
+DEBVERSION=jammy
 CHRNAME=lodev-${DEBVERSION}
 CHRDIR=/srv/chroot/${CHRNAME}
 CHRWORKSPACE=${CHRDIR}/${WORKSPACE}
@@ -41,13 +41,13 @@ CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
 COREURL="https://github.com/dennisfrancis/core.git"
 
-ONLINEREPODIR=online
+ONLINEREPODIR=co2021
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=fixes/calc-online-cp2021
-ONLINE_BRANCH=private/dennisf/online-fixes
+CORE_BRANCH=private/dennisf/cp2021-fixes
+ONLINE_BRANCH=private/dennisf/co-21-11-fixes
 
 CSUMSFILE=checksums.txt
 
