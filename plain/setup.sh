@@ -15,7 +15,7 @@ apt-get install -y -q binutils locales sudo vim procps bash-completion nano wget
 locale-gen en_US.UTF-8
 apt-get install -y -q build-essential git ccache junit4 gstreamer1.0-libav libkrb5-dev nasm graphviz libpython3-dev valgrind libpoco-dev
 apt-get install -y -q libpng-dev libcap-dev python3-polib libpam0g-dev libgtk2.0-dev
-apt-get install -y -q clang libclang-dev llvm llvm-dev xvfb chromium-browser npm
+apt-get install -y -q clang libclang-dev llvm llvm-dev lld xvfb chromium-browser npm
 apt-get build-dep -y -q libreoffice
 apt install -y -q python3-pip
 pip3 install lxml
