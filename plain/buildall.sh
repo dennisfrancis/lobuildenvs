@@ -36,7 +36,7 @@ fi
 
 # Build online
 cd ${ONLINEDIR} && TZ=Asia/Kolkata echo "[$(date)] Building online..." >> ${BUILDALL_LOG} 2>&1
-(./autogen.sh && ${ONLINE_CONFIG_CMD} && make -j${NPARALLEL}) >> ${ONLINE_BUILD_LOG} 2>&1
+(./autogen.sh && ${ONLINE_CONFIG_CMD} && make -j${NPARALLEL} DEBUG=true) >> ${ONLINE_BUILD_LOG} 2>&1
 
 if [ $? -eq 0 ]
 then
