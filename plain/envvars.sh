@@ -32,22 +32,22 @@ LODEVSCRIPTS_DIR=${LODEVSETUP_DIR}
 LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 
 ## Build core only ----------------------------------------------
-COREONLY=0
+COREONLY=1
 
 # core.git and online.git repodirs/tarballs
-REPODIR=cp2021
+REPODIR=core-master
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz
 CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
 COREURL="https://github.com/dennisfrancis/core.git"
 
-ONLINEREPODIR=co2021
+ONLINEREPODIR=online
 ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=private/dennisf/cp2021-fixes
-ONLINE_BRANCH=private/dennisf/co-21-11-fixes
+CORE_BRANCH=private/dennisf/core-fixes
+ONLINE_BRANCH=private/dennisf/restore-view-sheet-switch-master
 
 CSUMSFILE=checksums.txt
 

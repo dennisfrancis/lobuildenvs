@@ -14,7 +14,7 @@ touch ${BUILDALL_RUNNING}
 # Build core
 cd ${COREDIR}
 TZ=Asia/Kolkata echo "[$(date)] Building core..." > ${BUILDALL_LOG} 2>&1
-(./autogen.sh && make build-nocheck) > ${CORE_BUILD_LOG} 2>&1
+(./autogen.sh && make build) > ${CORE_BUILD_LOG} 2>&1
 if [ $? -eq 0 ]
 then
     TZ=Asia/Kolkata echo "[$(date)] Finished building core." >> ${BUILDALL_LOG} 2>&1
