@@ -29,7 +29,7 @@ echo ""
 free -h
 
 echo ""
-echo "clang processes"
-pgrep -l clang
+echo "compiler processes"
+pgrep -l cc1plus
 
 true

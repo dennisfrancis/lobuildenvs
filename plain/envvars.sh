@@ -14,7 +14,7 @@ BUILDMCLOGIN=${UNAME}@${BUILDMC}
 WORKSPACE=/home/dennis/devel
 
 # chroot system
-DEBVERSION=jammy
+DEBVERSION=noble
 CHRNAME=lodev-${DEBVERSION}
 CHRDIR=/srv/chroot/${CHRNAME}
 CHRWORKSPACE=${CHRDIR}/${WORKSPACE}
@@ -35,7 +35,7 @@ LODEVSETUP_SCRIPT=${LODEVSETUP_DIR}/lodevsetup.sh
 COREONLY=1
 
 # core.git and online.git repodirs/tarballs
-REPODIR=core-master
+REPODIR=core
 CORE_TARBALL_FNAME=${REPODIR}-src.tar.gz
 CORE_EXTERNALS_TARBALL_FNAME=${REPODIR}-externals.tar.gz
 COREDIR=${WORKSPACE}/${REPODIR}
@@ -46,8 +46,8 @@ ONLINE_TARBALL_FNAME=${ONLINEREPODIR}-src.tar.gz
 ONLINEDIR=${WORKSPACE}/${ONLINEREPODIR}
 ONLINEURL="https://github.com/dennisfrancis/online.git"
 
-CORE_BRANCH=private/dennisf/core-fixes
-ONLINE_BRANCH=private/dennisf/restore-view-sheet-switch-master
+CORE_BRANCH=private/dennisf/co-24.04
+ONLINE_BRANCH=private/dennisf/typescript
 
 CSUMSFILE=checksums.txt
 
@@ -73,7 +73,7 @@ ONLINE_CHECK_LOG=${WORKSPACE}/online-check.log
 
 
 # ./configure command for online
-ONLINE_CONFIG_CMD="./configure CC=clang CXX=clang++ --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress"
+ONLINE_CONFIG_CMD="./configure --prefix=/tmp/online-cache --enable-silent-rules --with-lokit-path=${COREDIR}/include --with-lo-path=${COREDIR}/instdir --enable-debug --enable-cypress --disable-ssl"
 
 
 # make check targets
