@@ -53,4 +53,4 @@ cp -r ${SCRIPTDIR}/autogen.input ${WORKSPACE}/
 chown -R ${UNAME} ${WORKSPACE}
 chmod -R 755 ${WORKSPACE}
 
-sudo -u ${UNAME} setup_python.bash
+sudo -u ${UNAME} ./setup_python.bash
