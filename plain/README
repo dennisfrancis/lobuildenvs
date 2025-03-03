@@ -25,7 +25,7 @@
 3. Run ./autogen.sh in both core and online local repos
 
 
-4. Do 'make fetch' in core and create externals.tar.gz in ~/devel
+4. Do 'make fetch' in core and create *-externals.tar.gz in ~/devel
 
 
 5. Start buildmc, update ip in ~/.ssh/config
