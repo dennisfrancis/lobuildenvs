@@ -74,7 +74,7 @@ copyscripts:
 start-buildall: autogen.input copyscripts
 	@echo "[start-buildall] Starting builds in the background."
 	ssh "$(BUILDMCLOGIN)" 'cd $(WORKSPACE) && ./buildall.sh > /dev/null 2>&1 &'
-	
+
 getbuilds:
 	@echo "[getbuilds] Starting getbuilds.sh in local machine."
 	bash ./getbuilds.sh > /tmp/getbuilds-bg.log 2>&1 &
